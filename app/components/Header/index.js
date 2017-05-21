@@ -12,8 +12,8 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
   render() {
     return (
       <div>
-        <A href="https://twitter.com/mxstbr">
-          <Img src={Banner} alt="react-boilerplate - Logo" />
+        <A href="http://padstats.co/">
+          <Img src={Banner} alt="PadStats - Logo" />
         </A>
         <NavBar>
           <HeaderLink to="/">
@@ -21,6 +21,9 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
           </HeaderLink>
           <HeaderLink to="/features">
             <FormattedMessage {...messages.features} />
+          </HeaderLink>
+          <HeaderLink to="/landingPage">
+            <FormattedMessage {...messages.landingPage} />
           </HeaderLink>
         </NavBar>
       </div>

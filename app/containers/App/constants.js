@@ -13,3 +13,7 @@ export const LOAD_REPOS = 'boilerplate/App/LOAD_REPOS';
 export const LOAD_REPOS_SUCCESS = 'boilerplate/App/LOAD_REPOS_SUCCESS';
 export const LOAD_REPOS_ERROR = 'boilerplate/App/LOAD_REPOS_ERROR';
 export const DEFAULT_LOCALE = 'en';
+
+export const MAILCHIMP_RESPONSE = 'boilerplate/App/MAILCHIMP_RESPONSE';
+export const MAILCHIMP_RESPONSE_SUCCESS = 'boilerplate/App/MAILCHIMP_RESPONSE_SUCCESS';
+export const MAILCHIMP_RESPONSE_ERROR = 'boilerplate/App/MAILCHIMP_RESPONSE_ERROR';

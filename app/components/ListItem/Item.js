@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const Item = styled.div`
   display: flex;
@@ -6,6 +6,7 @@ const Item = styled.div`
   width: 100%;
   height: 100%;
   align-items: center;
-`;
+  text-align: center;
+`
 
-export default Item;
+export default Item

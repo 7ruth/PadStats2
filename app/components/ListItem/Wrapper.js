@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const Wrapper = styled.li`
   width: 100%;
-  height: 3em;
+  height: 4em;
   display: flex;
   align-items: center;
   position: relative;
@@ -11,6 +11,6 @@ const Wrapper = styled.li`
   &:first-child {
     border-top: none;
   }
-`;
+`
 
-export default Wrapper;
+export default Wrapper

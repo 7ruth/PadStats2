@@ -14,4 +14,8 @@ export default defineMessages({
     id: 'boilerplate.components.Header.features',
     defaultMessage: 'Features',
   },
+  landingPage: {
+    id: 'boilerplate.components.Header.landingPage',
+    defaultMessage: 'My Landing Page',
+  },
 });
