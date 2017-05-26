@@ -1,34 +1,34 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import React from 'react'
+import { FormattedMessage } from 'react-intl'
 
-import A from './A';
-import Img from './Img';
-import NavBar from './NavBar';
-import HeaderLink from './HeaderLink';
-import Banner from './banner.jpg';
-import messages from './messages';
+import A from './A'
+import Img from './Img'
+import NavBar from './NavBar'
+import HeaderLink from './HeaderLink'
+import Logo from './logo.png'
+import messages from './messages'
 
 class Header extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  render() {
+  render () {
     return (
       <div>
-        <A href="http://padstats.co/">
-          <Img src={Banner} alt="PadStats - Logo" />
+        <A href='http://padstats.co/'>
+          <Img src={Logo} alt='PadStats - Logo' />
         </A>
         <NavBar>
-          <HeaderLink to="/">
+          <HeaderLink to='/'>
             <FormattedMessage {...messages.home} />
           </HeaderLink>
-          <HeaderLink to="/features">
+          <HeaderLink to='/features'>
             <FormattedMessage {...messages.features} />
           </HeaderLink>
-          <HeaderLink to="/landingPage">
+          <HeaderLink to='/landingPage'>
             <FormattedMessage {...messages.landingPage} />
           </HeaderLink>
         </NavBar>
       </div>
-    );
+    )
   }
 }
 
-export default Header;
+export default Header

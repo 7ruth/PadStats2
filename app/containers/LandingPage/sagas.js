@@ -24,7 +24,6 @@ export function* postMailChimpSubscribe () {
 
   try {
     // Call our request helper (see 'utils/request')
-console.log('1hi-!!!!')
     const response = yield call(request, requestURL, {
       method: 'POST',
       headers: {
@@ -32,13 +31,8 @@ console.log('1hi-!!!!')
       },
       body: JSON.stringify(body)
     })
-    // yield put(reposLoaded(repos, subscribeEmail));
-// console.log('2hi!!!!!')
-console.log(response)
-console.log(subscribeEmail);
     // get mail chimp response and also pass email address for further manipulation
     yield put(mailChimpResponse(response, subscribeEmail))
-    // yield put(reposLoaded(repos, username));
   } catch (err) {
     yield put(mailChimpResponseError(err))
   }

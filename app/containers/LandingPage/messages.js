@@ -1,5 +1,5 @@
 /*
- * HomePage Messages
+ * Landing Page Messages
  *
  * This contains all the text for the HomePage component.
  */
@@ -8,7 +8,11 @@ import { defineMessages } from 'react-intl'
 export default defineMessages({
   startProjectHeader: {
     id: 'boilerplate.containers.LandingPage.start_project.header',
-    defaultMessage: 'PadStats, we help people find ideal home locations'
+    defaultMessage: 'PadStats'
+  },
+  startProjectSlogan: {
+    id: 'boilerplate.containers.LandingPage.start_project.slogan',
+    defaultMessage: 'Find a perfect location for your home'
   },
   startProjectMessage: {
     id: 'boilerplate.containers.LandingPage.start_project.message',

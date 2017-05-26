@@ -13,11 +13,14 @@ import { createStructuredSelector } from 'reselect'
 import { makeSelectRepos, makeSelectLoading, makeSelectError, makeSelectMailChimpResponse, makeSelectCurrentUser } from 'containers/App/selectors'
 import H2 from 'components/H2'
 import MailChimpMessageBox from 'components/MailChimpMessageBox'
-import AtPrefix from './AtPrefix'
 import CenteredSection from './CenteredSection'
 import Form from './Form'
 import Input from './Input'
-import Section from './Section'
+import Img from './Img'
+import Div from './Div'
+import DivMainDescription from './DivMainDescription'
+import P from './P'
+import WelcomeToSuburbia from './welcomeToSuburbia2.jpg'
 import messages from './messages'
 import { submitMailChimp } from '../App/actions'
 import { changeSubscribeEmail } from './actions'
@@ -47,18 +50,24 @@ export class LandingPage extends React.PureComponent { // eslint-disable-line re
         <Helmet
           title='Landing Page'
           meta={[
-            { name: 'description', content: 'My new example LandingPage' }
+            { name: 'description', content: 'PadStats, we help you find an ideal location for your next home.' }
           ]}
         />
         <div>
           <CenteredSection>
             <H2>
-              <FormattedMessage {...messages.startProjectHeader} />
+              <Div>
+                <FormattedMessage {...messages.startProjectHeader} />
+                <P>
+                  <FormattedMessage {...messages.startProjectSlogan} />
+                </P>
+              </Div>
+              <Img src={WelcomeToSuburbia} alt='Welcome to suberbia' />
             </H2>
-            <p>
-              <FormattedMessage {...messages.startProjectMessage} />
-            </p>
           </CenteredSection>
+          <DivMainDescription>
+            <FormattedMessage {...messages.startProjectMessage} />
+          </DivMainDescription>
           <CenteredSection>
             <H2>
               <FormattedMessage {...messages.trymeMessage} />
