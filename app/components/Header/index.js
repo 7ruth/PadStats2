@@ -25,6 +25,9 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
           <HeaderLink to='/landingPage'>
             <FormattedMessage {...messages.landingPage} />
           </HeaderLink>
+          <HeaderLink to='/mapPage'>
+            <FormattedMessage {...messages.mapPage} />
+          </HeaderLink>
         </NavBar>
       </div>
     )

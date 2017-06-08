@@ -17,5 +17,9 @@ export default defineMessages({
   landingPage: {
     id: 'boilerplate.components.Header.landingPage',
     defaultMessage: 'My Landing Page'
+  },
+  mapPage: {
+    id: 'boilerplate.components.Header.landingPage',
+    defaultMessage: 'Search Locations'
   }
 })
