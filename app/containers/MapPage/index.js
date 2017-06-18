@@ -18,6 +18,8 @@ import messages from './messages'
 import { submitMailChimp } from '../App/actions'
 import { changeSubscribeEmail } from './actions'
 import { makeSelectSubscribeEmail } from './selectors'
+import GoogleMapContainer from '../GoogleMapContainer/index'
+
 
 export class MapPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
@@ -37,8 +39,11 @@ export class MapPage extends React.PureComponent { // eslint-disable-line react/
       currentUser,
       mailChimpResponse
     }
+    // const key1 = makeID()
+
 
     return (
+
       <article>
         <Helmet
           title='Search Property Locations'
@@ -46,6 +51,7 @@ export class MapPage extends React.PureComponent { // eslint-disable-line react/
             { name: 'description', content: 'PadStats, we help you find an ideal location for your next home.' }
           ]}
         />
+        <GoogleMapContainer />
         <div>
           <CenteredSection>
             <H2>

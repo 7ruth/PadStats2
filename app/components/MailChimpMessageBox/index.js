@@ -5,12 +5,6 @@ import ListItem from 'components/ListItem'
 import LoadingIndicator from 'components/LoadingIndicator'
 
 function MailChimpMessageBox ({ loading, error, currentUser, mailChimpResponse }) {
-  console.log('----------------------------')
-  console.log("loadin: " + loading)
-  console.log("error: " + error)
-  console.log("currentUser: " + currentUser)
-  console.log("mailChimpResponse: " + mailChimpResponse)
-
   console.dir(mailChimpResponse)
   // if there was a response
   if (mailChimpResponse) {

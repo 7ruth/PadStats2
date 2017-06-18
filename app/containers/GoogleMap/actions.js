@@ -1,5 +1,5 @@
 /*
- * Home Actions
+ * Google Map Actions
  *
  * Actions change things in your application
  * Since this boilerplate uses a uni-directional data flow, specifically redux,
@@ -16,7 +16,7 @@
  */
 
 import {
-  CHANGE_USERNAME,
+  CHANGE_ADDRESS,
 } from './constants';
 
 /**
@@ -26,9 +26,9 @@ import {
  *
  * @return {object}    An action object with a type of CHANGE_USERNAME
  */
-export function changeUsername(name) {
+export function changeAddress (name) {
   return {
-    type: CHANGE_USERNAME,
-    name,
+    type: CHANGE_ADDRESS,
+    address,
   };
 }
