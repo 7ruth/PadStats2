@@ -16,8 +16,8 @@
  */
 
 import {
-  CHANGE_SUBSCRIBEEMAIL
-} from './constants'
+  CHANGE_SUBSCRIBEEMAIL,
+} from './constants';
 
 /**
  * Changes the input field of the form
@@ -26,9 +26,9 @@ import {
  *
  * @return {object}    An action object with a type of CHANGE_USERNAME
  */
-export function changeSubscribeEmail (subscribeEmail) {
+export function changeSubscribeEmail(subscribeEmail) {
   return {
     type: CHANGE_SUBSCRIBEEMAIL,
-    subscribeEmail
-  }
+    subscribeEmail,
+  };
 }

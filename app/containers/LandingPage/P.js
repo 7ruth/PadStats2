@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Item = styled.p`
   margin: 0;
@@ -6,6 +6,6 @@ const Item = styled.p`
   font-size: 4.5vw;
   font-family: helvetica;
   text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
-`
+`;
 
-export default Item
+export default Item;

@@ -21,8 +21,8 @@ import {
   LOAD_REPOS_ERROR,
   MAILCHIMP_RESPONSE,
   MAILCHIMP_RESPONSE_SUCCESS,
-  MAILCHIMP_RESPONSE_ERROR
-} from './constants'
+  MAILCHIMP_RESPONSE_ERROR,
+} from './constants';
 
 /**
  * Load the repositories, this action starts the request saga
@@ -31,8 +31,8 @@ import {
  */
 export function loadRepos() {
   return {
-    type: LOAD_REPOS
-  }
+    type: LOAD_REPOS,
+  };
 }
 
 /**
@@ -43,12 +43,12 @@ export function loadRepos() {
  *
  * @return {object}      An action object with a type of LOAD_REPOS_SUCCESS passing the repos
  */
-export function reposLoaded (repos, username) {
+export function reposLoaded(repos, username) {
   return {
     type: LOAD_REPOS_SUCCESS,
     repos,
-    username
-  }
+    username,
+  };
 }
 
 /**
@@ -61,8 +61,8 @@ export function reposLoaded (repos, username) {
 export function repoLoadingError(error) {
   return {
     type: LOAD_REPOS_ERROR,
-    error
-  }
+    error,
+  };
 }
 
 /**
@@ -72,8 +72,8 @@ export function repoLoadingError(error) {
  */
 export function submitMailChimp() {
   return {
-    type: MAILCHIMP_RESPONSE
-  }
+    type: MAILCHIMP_RESPONSE,
+  };
 }
 
 /**
@@ -83,12 +83,12 @@ export function submitMailChimp() {
  *
  * @return {object} An action object with a type of MAILCHIMP_RESPONSE passing the response
  */
- export function mailChimpResponse (mailChimpResponse, subscribeEmail) {
+ export function mailChimpResponse(mailChimpResponse, subscribeEmail) { //eslint-disable-line
    return {
      type: MAILCHIMP_RESPONSE_SUCCESS,
      mailChimpResponse,
-     subscribeEmail
-   }
+     subscribeEmail,
+   };
  }
 
  /**
@@ -98,9 +98,9 @@ export function submitMailChimp() {
   *
   * @return {object}   An action object with a type of MAILCHIMP_RESPONSE_ERROR passing the response
   */
-  export function mailChimpResponseError(error) {
-    return {
-      type: MAILCHIMP_RESPONSE_ERROR,
-      error,
-    };
-  }
+export function mailChimpResponseError(error) {
+  return {
+    type: MAILCHIMP_RESPONSE_ERROR,
+    error,
+  };
+}

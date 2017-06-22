@@ -9,27 +9,27 @@
  * case YOUR_ACTION_CONSTANT:
  *   return state.set('yourStateVariable', true);
  */
-import { fromJS } from 'immutable'
+import { fromJS } from 'immutable';
 
 import {
-  CHANGE_SUBSCRIBEEMAIL
-} from './constants'
+  CHANGE_SUBSCRIBEEMAIL,
+} from './constants';
 
 // The initial state of the App
 const initialState = fromJS({
-  subscribeEmail: ''
-})
+  subscribeEmail: '',
+});
 
-function LandingPageReducer (state = initialState, action) {
+function LandingPageReducer(state = initialState, action) {
   switch (action.type) {
     case CHANGE_SUBSCRIBEEMAIL:
 
       // Delete prefixed '@' from the github username
       return state
-        .set('subscribeEmail', action.subscribeEmail.replace('/@/gi', ''))
+        .set('subscribeEmail', action.subscribeEmail.replace('/@/gi', ''));
     default:
-      return state
+      return state;
   }
 }
 
-export default LandingPageReducer
+export default LandingPageReducer;

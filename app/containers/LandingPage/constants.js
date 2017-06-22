@@ -9,4 +9,4 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
-export const CHANGE_SUBSCRIBEEMAIL = 'boilerplate/LandingPage/CHANGE_SUBSCRIBEEMAIL'
+export const CHANGE_SUBSCRIBEEMAIL = 'boilerplate/LandingPage/CHANGE_SUBSCRIBEEMAIL';

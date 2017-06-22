@@ -1,21 +1,37 @@
-import React from 'react'
-import * as config from '../../utils/GoogleMapsUtils/config'
-import GoogleApiComponent from '../../utils/GoogleMapsUtils/GoogleApiComponent'
-import GoogleMap from '../GoogleMap/index'
+import React from 'react';
+import * as config from '../../utils/GoogleMapsUtils/config';
+import GoogleApiComponent from '../../utils/GoogleMapsUtils/GoogleApiComponent';
+import GoogleMapTemplate from '../GoogleMapTemplate/index';
+import GoogleMapContents from '../GoogleMapContents/index';
 
-export class GoogleMapContainer extends React.Component {
+export class GoogleMapContainer extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  //
+  render() {
+    const props = this.props;
+    const { google } = this.props;
 
-  render () {
     return (
       <div>
-        <GoogleMap google={this.props.google}>
-        </GoogleMap>
+        <GoogleMapTemplate
+          google={google}
+          className={'map'}
+          visible={false}
+        >
+          <GoogleMapContents {...props} />
+        </GoogleMapTemplate>
       </div>
-    )
+    );
   }
 }
 
-let key = config.getGoogleKey()
+GoogleMapContainer.propTypes = {
+  google: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
+};
+
+const key = config.getGoogleKey();
 export default GoogleApiComponent({
-  apiKey: key
-})(GoogleMapContainer)
+  apiKey: key,
+})(GoogleMapContainer);

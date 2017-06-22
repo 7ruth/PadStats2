@@ -10,7 +10,7 @@
  *   return state.set('yourStateVariable', true);
  */
 
-import { fromJS } from 'immutable'
+import { fromJS } from 'immutable';
 
 import {
   LOAD_REPOS_SUCCESS,
@@ -18,8 +18,8 @@ import {
   LOAD_REPOS_ERROR,
   MAILCHIMP_RESPONSE,
   MAILCHIMP_RESPONSE_SUCCESS,
-  MAILCHIMP_RESPONSE_ERROR
-} from './constants'
+  MAILCHIMP_RESPONSE_ERROR,
+} from './constants';
 
 // The initial state of the App
 const initialState = fromJS({
@@ -27,48 +27,48 @@ const initialState = fromJS({
   error: false,
   currentUser: false,
   userData: {
-    repositories: false
+    repositories: false,
   },
-  mailChimpResponse: false
-})
+  mailChimpResponse: false,
+});
 
-function appReducer (state = initialState, action) {
+function appReducer(state = initialState, action) {
   switch (action.type) {
     case LOAD_REPOS:
       return state
         .set('loading', true)
         .set('error', false)
-        .setIn(['userData', 'repositories'], false)
+        .setIn(['userData', 'repositories'], false);
     case LOAD_REPOS_SUCCESS:
       return state
         .setIn(['userData', 'repositories'], action.repos)
         .set('loading', false)
-        .set('currentUser', action.username)
+        .set('currentUser', action.username);
     case LOAD_REPOS_ERROR:
       return state
         .set('error', action.error)
-        .set('loading', false)
+        .set('loading', false);
     case MAILCHIMP_RESPONSE:
       return state
         .set('loading', true)
         .set('error', false)
         .set('mailChimpResponse', false)
-        .set('currentUser', false)
+        .set('currentUser', false);
     case MAILCHIMP_RESPONSE_SUCCESS:
       return state
         .set('mailChimpResponse', action.mailChimpResponse)
         .set('loading', false)
         .set('error', false)
-        .set('currentUser', action.subscribeEmail)
+        .set('currentUser', action.subscribeEmail);
     case MAILCHIMP_RESPONSE_ERROR:
       return state
         .set('mailChimpResponse', false)
         .set('error', action.error)
         .set('loading', false)
-        .set('currentUser', false)
+        .set('currentUser', false);
     default:
-      return state
+      return state;
   }
 }
 
-export default appReducer
+export default appReducer;
