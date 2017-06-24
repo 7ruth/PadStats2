@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import invariant from 'invariant';
 import { camelize } from '../../utils/GoogleMapsUtils/String';
 import { makeCancelable } from '../../utils/GoogleMapsUtils/cancelablePromise';
@@ -52,7 +51,7 @@ export class Map extends React.Component {
   constructor(props) {
     super(props);
 
-    invariant(props.hasOwnProperty('google'),
+    invariant(Object.prototype.hasOwnProperty.call(props, 'google'),
                 'You must include a `google` prop.');
 
     this.listeners = {};
@@ -73,7 +72,7 @@ export class Map extends React.Component {
           })
         );
 
-        this.geoPromise.promise.then(pos => {
+        this.geoPromise.promise.then((pos) => {
           const coords = pos.coords;
           this.setState({
             currentLocation: {
@@ -81,7 +80,7 @@ export class Map extends React.Component {
               lng: coords.longitude,
             },
           });
-        }).catch(e => e);
+        }).catch((e) => e);
       }
     }
     this.loadMap();
@@ -98,7 +97,7 @@ export class Map extends React.Component {
       this.map.setZoom(this.props.zoom);
     }
     if (this.props.center !== prevProps.center) {
-      this.setState({
+      this.setState({ //eslint-disable-line
         currentLocation: this.props.center,
       });
     }
@@ -112,18 +111,17 @@ export class Map extends React.Component {
     if (this.geoPromise) {
       this.geoPromise.cancel();
     }
-    Object.keys(this.listeners).forEach(e => {
+    Object.keys(this.listeners).forEach((e) => {
       google.maps.event.removeListener(this.listeners[e]);
     });
   }
 
   loadMap() {
     if (this.props && this.props.google) {
-      const {google} = this.props;
+      const { google } = this.props;
       const maps = google.maps;
 
-      const mapRef = this.refs.map;
-      const node = ReactDOM.findDOMNode(mapRef);
+      const node = this.myMap;
       const curr = this.state.currentLocation;
       const center = new maps.LatLng(curr.lat, curr.lng);
 
@@ -135,7 +133,7 @@ export class Map extends React.Component {
         center: center, //eslint-disable-line
         zoom: this.props.zoom,
         maxZoom: this.props.maxZoom,
-        minZoom: this.props.maxZoom,
+        minZoom: this.props.minZoom,
         clickableIcons: this.props.clickableIcons,
         disableDefaultUI: this.props.disableDefaultUI,
         zoomControl: this.props.zoomControl,
@@ -162,7 +160,7 @@ export class Map extends React.Component {
 
       this.map = new maps.Map(node, mapConfig);
 
-      evtNames.forEach(e => {
+      evtNames.forEach((e) => {
         this.listeners[e] = this.map.addListener(e, this.handleEvent(e));
       });
       maps.event.trigger(this.map, 'ready');
@@ -229,7 +227,7 @@ export class Map extends React.Component {
 
   render() {
     const style = Object.assign({}, mapStyles.map, this.props.style, {
-      display: this.props.visible ? 'inherit' : 'none'
+      display: this.props.visible ? 'inherit' : 'none',
     });
 
     const containerStyles = Object.assign({},
@@ -237,7 +235,7 @@ export class Map extends React.Component {
 
     return (
       <div style={containerStyles} className={this.props.className}>
-        <div style={style} ref="map">
+        <div style={style} ref={(ref) => { this.myMap = ref; }}>
           Loading map...
         </div>
         {this.renderChildren()}
@@ -253,6 +251,10 @@ Map.propTypes = {
   center: PropTypes.object,
   initialCenter: PropTypes.object,
   className: PropTypes.string,
+  children: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
   style: PropTypes.object,
   containerStyle: PropTypes.object,
   visible: PropTypes.bool,
@@ -276,7 +278,7 @@ Map.propTypes = {
   gestureHandling: PropTypes.string,
 };
 
-evtNames.forEach(e => Map.propTypes[camelize(e)] = PropTypes.func);
+evtNames.forEach((e) => { Map.propTypes[camelize(e)] = PropTypes.func; });
 
 Map.defaultProps = {
   zoom: 14,

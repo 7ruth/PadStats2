@@ -1,10 +1,8 @@
-import React, { PropTypes as T } from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import cache from './ScriptCache';
+import GoogleApi from './GoogleApi';
 
-import cache from './ScriptCache'
-import GoogleApi from './GoogleApi'
-
-const defaultMapConfig = {}
+const defaultMapConfig = {};
 export const wrapper = (options) => (WrappedComponent) => {
   const apiKey = options.apiKey;
   const libraries = options.libraries || ['places'];
@@ -15,60 +13,61 @@ export const wrapper = (options) => (WrappedComponent) => {
       this.state = {
         loaded: false,
         map: null,
-        google: null
+        google: null,
+      };
+    }
+
+    componentWillMount() {
+      // check if window.google.maps is already set
+      if (window.google === undefined) {
+        this.scriptCache = cache({
+          google: GoogleApi({
+            apiKey: apiKey, // eslint-disable-line
+            libraries: libraries // eslint-disable-line
+          }),
+        });
       }
     }
 
     componentDidMount() {
-      const refs = this.refs;
       if (window.google === null) {
-        this.scriptCache.google.onLoad((err, tag) => {
+        this.scriptCache.google.onLoad((err, tag) => { // eslint-disable-line
           const maps = window.google.maps;
-          const props = Object.assign({}, this.props, {
-            loaded: this.state.loaded
+          const props = Object.assign({}, this.props, { // eslint-disable-line
+            loaded: this.state.loaded,
           });
-          const mapRef = refs.map;
-          const node = ReactDOM.findDOMNode(mapRef);
-          let center = new maps.LatLng(this.props.lat, this.props.lng)
-          let mapConfig = Object.assign({}, defaultMapConfig, {
-            center, zoom: this.props.zoom
-          })
+          // const mapRef = refs.map;
+          const node = this.myMap;
+          const center = new maps.LatLng(this.props.lat, this.props.lng);
+          const mapConfig = Object.assign({}, defaultMapConfig, {
+            center: center, // eslint-disable-line
+            zoom: this.props.zoom,
+          });
           this.map = new maps.Map(node, mapConfig);
           this.setState({
             loaded: true,
             map: this.map,
-            google: window.google
-          })
+            google: window.google,
+          });
         });
       } else {
         const maps = window.google.maps;
-        const props = Object.assign({}, this.props, {
-          loaded: this.state.loaded
+        const props = Object.assign({}, this.props, { // eslint-disable-line
+          loaded: this.state.loaded,
         });
-        const mapRef = refs.map;
-        const node = ReactDOM.findDOMNode(mapRef);
-        let center = new maps.LatLng(this.props.lat, this.props.lng)
-        let mapConfig = Object.assign({}, defaultMapConfig, {
-          center, zoom: this.props.zoom
-        })
+        // const mapRef = refs.map;
+        const node = this.myMap;
+        const center = new maps.LatLng(this.props.lat, this.props.lng);
+        const mapConfig = Object.assign({}, defaultMapConfig, {
+          center: center, // eslint-disable-line
+          zoom: this.props.zoom,
+        });
 
         this.map = new maps.Map(node, mapConfig);
-        this.setState({
+        this.setState({ //eslint-disable-line
           loaded: true,
           map: this.map,
-          google: window.google
-        })
-      }
-    }
-
-    componentWillMount() {
-      //check if window.google.maps is already set
-      if (window.google === undefined) {
-        this.scriptCache = cache({
-          google: GoogleApi({
-            apiKey: apiKey,
-            libraries: libraries
-          })
+          google: window.google,
         });
       }
     }
@@ -78,18 +77,28 @@ export const wrapper = (options) => (WrappedComponent) => {
         loaded: this.state.loaded,
         map: this.state.map,
         google: this.state.google,
-        mapComponent: this.refs.map
-      })
+        mapComponent: this.myMap,
+      });
       return (
         <div>
           <WrappedComponent {...props} />
-          <div ref='map' />
+          <div ref={(ref) => { this.myMap = ref; }} />
         </div>
-      )
+      );
     }
   }
 
+  Wrapper.propTypes = {
+    zoom: React.PropTypes.oneOfType([
+      React.PropTypes.object,
+      React.PropTypes.bool,
+    ]),
+    lat: React.PropTypes.string,
+    lng: React.PropTypes.string,
+  };
+
   return Wrapper;
-}
+};
+
 
 export default wrapper;

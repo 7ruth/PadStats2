@@ -1,16 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-
 import Map from '../GoogleMapTemplate/index';
 import Marker from '../../components/GoogleMapMarker/Marker';
 import FlexWrapperDiv from './FlexWrapperDiv';
 import LeftDiv from './LeftDiv';
 import RightDiv from './RightDiv';
 
-const Listing = ({ places }) => {
+// will separate out Listing into a separate component as this evolves
+const Listing = ({ places }) => { // eslint-disable-line
   return (
     <ul>
-      {places && places.map(p => {
+      {places && places.map((p) => { // eslint-disable-line
         return (
           <li key={p.id}>
             {p.name}
@@ -21,29 +20,31 @@ const Listing = ({ places }) => {
   );
 };
 
-const GoogleMapContents = React.createClass({
-  getInitialState() {
-    return {
+export default class GoogleMapContents extends React.PureComponent {
+
+  constructor(props) {
+    super(props);
+    this.state = {
       place: null,
       position: null,
       places: [],
     };
-  },
+  }
 
   componentDidMount() {
     this.renderAutoComplete();
-  },
+  }
 
   componentDidUpdate(prevProps) {
-    const { google, map } = this.props;
+    const { map } = this.props;
     if (map !== prevProps.map) {
       this.renderAutoComplete();
     }
-  },
+  }
 
   onSubmit(e) {
     e.preventDefault();
-  },
+  }
 
   searchNearby(map, center) {
     const { google } = this.props;
@@ -56,7 +57,7 @@ const GoogleMapContents = React.createClass({
     };
 
     service.nearbySearch(request, (results, status, pagination) => {
-      if (status == google.maps.places.PlacesServiceStatus.OK) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
         this.pagination = pagination;
         this.setState({
           places: results,
@@ -65,15 +66,15 @@ const GoogleMapContents = React.createClass({
         });
       }
     });
-  },
+  }
 
   renderAutoComplete() {
-    const {google, map} = this.props;
+    const { google, map } = this.props;
 
     if (!google || !map) return;
 
-    const aref = this.refs.autocomplete;
-    const node = ReactDOM.findDOMNode(aref);
+    // const aref = this.refs.autocomplete;
+    const node = this.myAutocomplete;
     const autocomplete = new google.maps.places.Autocomplete(node);
     autocomplete.bindTo('bounds', map);
 
@@ -93,11 +94,11 @@ const GoogleMapContents = React.createClass({
       this.searchNearby(map, map.center);
 
       this.setState({
-        place: place,
+        place: place, // eslint-disable-line
         position: place.geometry.location,
       });
     });
-  },
+  }
 
   render() {
     const props = this.props;
@@ -108,7 +109,7 @@ const GoogleMapContents = React.createClass({
         <LeftDiv>
           <form onSubmit={this.onSubmit}>
             <input
-              ref="autocomplete"
+              ref={(ref) => { this.myAutocomplete = ref; }}
               type="text"
               placeholder="Enter a location"
             />
@@ -141,7 +142,16 @@ const GoogleMapContents = React.createClass({
         </RightDiv>
       </FlexWrapperDiv>
     );
-  },
-});
+  }
+}
 
-export default GoogleMapContents;
+GoogleMapContents.propTypes = {
+  map: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
+  google: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
+};

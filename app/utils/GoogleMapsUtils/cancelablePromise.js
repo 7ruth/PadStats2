@@ -1,14 +1,14 @@
 // https://facebook.github.io/react/blog/2015/12/16/ismounted-antipattern.html
 
 export const makeCancelable = (promise) => {
-  let hasCanceled_ = false;
+  let hasCanceled_ = false; // eslint-disable-line
 
   const wrappedPromise = new Promise((resolve, reject) => {
     promise.then((val) =>
-      hasCanceled_ ? reject({isCanceled: true}) : resolve(val)
+      hasCanceled_ ? reject({ isCanceled: true }) : resolve(val)
     );
     promise.catch((error) =>
-      hasCanceled_ ? reject({isCanceled: true}) : reject(error)
+      hasCanceled_ ? reject({ isCanceled: true }) : reject(error)
     );
   });
 

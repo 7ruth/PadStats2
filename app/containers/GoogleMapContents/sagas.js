@@ -2,13 +2,13 @@
  * Gets the repositories of the user from Github
  */
 
-import { take, call, put, select, cancel, takeLatest } from 'redux-saga/effects';
+import { take, call, put, select, cancel, takeLatest } from 'redux-saga/effects'; // eslint-disable-line
 import { LOCATION_CHANGE } from 'react-router-redux';
 import { LOAD_REPOS } from 'containers/App/constants';
-import { reposLoaded, repoLoadingError } from 'containers/App/actions';
+import { reposLoaded, repoLoadingError } from 'containers/App/actions'; // eslint-disable-line
 
-import request from 'utils/request';
-import { makeSelectAddress } from 'containers/GoogleMap/selectors';
+import request from 'utils/request'; // eslint-disable-line
+import { makeSelectAddress } from 'containers/GoogleMap/selectors'; // eslint-disable-line
 
 /**
  * Github repos request/response handler
