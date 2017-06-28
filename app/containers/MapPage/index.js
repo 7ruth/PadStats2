@@ -12,7 +12,6 @@ import { createStructuredSelector } from 'reselect';
 
 import { makeSelectRepos, makeSelectLoading, makeSelectError, makeSelectMailChimpResponse, makeSelectCurrentUser } from 'containers/App/selectors';
 import H2 from 'components/H2';
-import MailChimpMessageBox from 'components/MailChimpMessageBox';
 import CenteredSection from './CenteredSection';
 import messages from './messages';
 import { submitMailChimp } from '../App/actions';
@@ -32,13 +31,13 @@ export class MapPage extends React.PureComponent { // eslint-disable-line react/
   }
 
   render() {
-    const { loading, error, currentUser, mailChimpResponse } = this.props;
-    const mailChimpMessageBoxProps = {
-      loading,
-      error,
-      currentUser,
-      mailChimpResponse,
-    };
+    // const { loading, error, currentUser, mailChimpResponse } = this.props;
+    // const mailChimpMessageBoxProps = {
+    //   loading,
+    //   error,
+    //   currentUser,
+    //   mailChimpResponse,
+    // };
     // const key1 = makeID()
 
 
@@ -57,7 +56,6 @@ export class MapPage extends React.PureComponent { // eslint-disable-line react/
             <H2>
               <FormattedMessage {...messages.trymeMessage} />
             </H2>
-            <MailChimpMessageBox {...mailChimpMessageBoxProps} />
           </CenteredSection>
         </div>
       </article>
@@ -66,19 +64,19 @@ export class MapPage extends React.PureComponent { // eslint-disable-line react/
 }
 
 MapPage.propTypes = {
-  loading: React.PropTypes.bool,
-  error: React.PropTypes.oneOfType([
-    React.PropTypes.object,
-    React.PropTypes.bool,
-  ]),
-  currentUser: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.bool,
-  ]),
-  mailChimpResponse: React.PropTypes.oneOfType([
-    React.PropTypes.object,
-    React.PropTypes.bool,
-  ]),
+  // loading: React.PropTypes.bool,
+  // error: React.PropTypes.oneOfType([
+  //   React.PropTypes.object,
+  //   React.PropTypes.bool,
+  // ]),
+  // currentUser: React.PropTypes.oneOfType([
+  //   React.PropTypes.string,
+  //   React.PropTypes.bool,
+  // ]),
+  // mailChimpResponse: React.PropTypes.oneOfType([
+  //   React.PropTypes.object,
+  //   React.PropTypes.bool,
+  // ]),
   onSubmitForm: React.PropTypes.func,
   subscribeEmail: React.PropTypes.string,
 };
