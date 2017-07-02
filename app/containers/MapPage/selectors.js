@@ -6,12 +6,24 @@ import { createSelector } from 'reselect';
 
 const selectMapPage = (state) => state.get('mapPage');
 
-const makeSelectSubscribeEmail = () => createSelector(
+const makeSelectLoaded = () => createSelector(
   selectMapPage,
-  (LandingState) => LandingState.get('subscribeEmail')
+  (MapPageState) => MapPageState.get('loaded')
+);
+
+const makeSelectMap = () => createSelector(
+  selectMapPage,
+  (MapPageState) => MapPageState.get('map')
+);
+
+const makeSelectGoogle = () => createSelector(
+  selectMapPage,
+  (MapPageState) => MapPageState.get('google')
 );
 
 export {
   selectMapPage,
-  makeSelectSubscribeEmail,
+  makeSelectLoaded,
+  makeSelectMap,
+  makeSelectGoogle,
 };

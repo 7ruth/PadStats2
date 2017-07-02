@@ -16,19 +16,22 @@
  */
 
 import {
-  CHANGE_SUBSCRIBEEMAIL,
+  GOOGLE_API_LOADED,
 } from './constants';
 
 /**
- * Changes the input field of the form
+ * Indicate the google api has returned an object and it will be set to mapPage's state
  *
  * @param  {name} name The new text of the input field
  *
  * @return {object}    An action object with a type of CHANGE_USERNAME
  */
-export function changeSubscribeEmail(subscribeEmail) {
+
+export function setMapPageState(loaded, map, google) {
   return {
-    type: CHANGE_SUBSCRIBEEMAIL,
-    subscribeEmail,
+    type: GOOGLE_API_LOADED,
+    loaded,
+    map,
+    google,
   };
 }

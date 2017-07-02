@@ -1,6 +1,5 @@
 import React from 'react';
-import * as config from '../../utils/GoogleMapsUtils/config';
-import GoogleApiComponent from '../../utils/GoogleMapsUtils/GoogleApiComponent';
+// import GoogleApiComponent from '../../utils/GoogleMapsUtils/GoogleApiComponent';
 import GoogleMapTemplate from '../GoogleMapTemplate/index';
 import GoogleMapContents from '../GoogleMapContents/index';
 
@@ -31,7 +30,4 @@ GoogleMapContainer.propTypes = {
   ]),
 };
 
-const key = config.getGoogleKey();
-export default GoogleApiComponent({
-  apiKey: key,
-})(GoogleMapContainer);
+export default GoogleMapContainer;

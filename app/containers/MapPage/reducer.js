@@ -12,21 +12,24 @@
 import { fromJS } from 'immutable';
 
 import {
-  CHANGE_SUBSCRIBEEMAIL,
+  GOOGLE_API_LOADED,
 } from './constants';
 
 // The initial state of the App
 const initialState = fromJS({
-  subscribeEmail: '',
+  loaded: '(@)_(@)',
+  map: null,
+  google: null,
 });
 
 function MapPageReducer(state = initialState, action) {
   switch (action.type) {
-    case CHANGE_SUBSCRIBEEMAIL:
+    case GOOGLE_API_LOADED:
 
-      // Delete prefixed '@' from the github username
       return state
-        .set('subscribeEmail', action.subscribeEmail.replace('/@/gi', ''));
+        .set('loaded', action.loaded)
+        .set('map', action.map)
+        .set('google', action.google);
     default:
       return state;
   }

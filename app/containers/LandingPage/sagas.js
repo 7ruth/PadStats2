@@ -16,7 +16,7 @@ import { makeSelectSubscribeEmail } from 'containers/LandingPage/selectors';
 export function* postMailChimpSubscribe() {
   // Select username from store
   const subscribeEmail = yield select(makeSelectSubscribeEmail());
-  const requestURL = `/api/signup`
+  const requestURL = `/api/signup`; //eslint-disable-line
 
   const body = {
     EMAIL: subscribeEmail,

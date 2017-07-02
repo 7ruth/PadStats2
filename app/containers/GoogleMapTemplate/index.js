@@ -42,7 +42,6 @@ const evtNames = [
   'zoom_changed',
 ];
 
-export { wrapper as GoogleApiWrapper } from '../../utils/GoogleMapsUtils/GoogleApiComponent';
 export { Marker } from '../../components/GoogleMapMarker/Marker';
 export { InfoWindow } from '../../components/GoogleMapInfoWindow/InfoWindow';
 export { HeatMap } from '../../components/GoogleMapHeatMap/HeatMap';
