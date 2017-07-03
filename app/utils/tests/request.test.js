@@ -38,7 +38,7 @@ describe('request', () => {
     beforeEach(() => {
       const res = new Response('', {
         status: 404,
-        statusText: 'Not Found',
+        statusText: 'Not Found!',
         headers: {
           'Content-type': 'application/json',
         },
