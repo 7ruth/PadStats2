@@ -1,1 +1,1 @@
-web: node server
+web: cross-env NODE_ENV=development node server
