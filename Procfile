@@ -1,1 +1,1 @@
-web: NODE_ENV=development node server
+web: node server
