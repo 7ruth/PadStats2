@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { camelize } from '../../utils/GoogleMapsUtils/String';
-const evtNames = ['click', 'mouseover', 'recenter', 'dragend'];
+const evtNames = ['mouseover', 'click', 'recenter', 'dragend'];
 
 const wrappedPromise = () => {
   const wrappedPromise = {}, //eslint-disable-line

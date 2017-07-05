@@ -1,21 +1,20 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { camelize } from '../../utils/GoogleMapsUtils/String'
-const evtNames = ['click', 'mouseover', 'recenter'];
+import { camelize } from '../../utils/GoogleMapsUtils/String';
+const evtNames = ['mouseover', 'click', 'recenter'];
 
-const wrappedPromise = function() {
-    var wrappedPromise = {},
-        promise = new Promise(function (resolve, reject) {
-            wrappedPromise.resolve = resolve;
-            wrappedPromise.reject = reject;
-        });
-    wrappedPromise.then = promise.then.bind(promise);
-    wrappedPromise.catch = promise.catch.bind(promise);
-    wrappedPromise.promise = promise;
-
-    return wrappedPromise;
-}
+const wrappedPromise = () => {
+  const wrappedPromise = {}, //eslint-disable-line
+    promise = new Promise((resolve, reject) => {
+      wrappedPromise.resolve = resolve;
+      wrappedPromise.reject = reject;
+    });
+  wrappedPromise.then = promise.then.bind(promise);
+  wrappedPromise.catch = promise.catch.bind(promise);
+  wrappedPromise.promise = promise;
+  return wrappedPromise;
+};
 
 export class HeatMap extends React.Component {
 
@@ -27,10 +26,10 @@ export class HeatMap extends React.Component {
   componentDidUpdate(prevProps) {
     if ((this.props.map !== prevProps.map) ||
       (this.props.position !== prevProps.position)) {
-        if (this.heatMap) {
-          this.heatMap.setMap(null);
-          this.renderHeatMap();
-        }
+      if (this.heatMap) {
+        this.heatMap.setMap(null);
+        this.renderHeatMap();
+      }
     }
   }
 
@@ -40,21 +39,34 @@ export class HeatMap extends React.Component {
     }
   }
 
+  getHeatMap() {
+    return this.heatMapPromise;
+  }
+
+  handleEvent(evt) {
+    return (e) => {
+      const evtName = `on${camelize(evt)}`;
+      if (this.props[evtName]) {
+        this.props[evtName](this.props, this.heatMap, e);
+      }
+    };
+  }
+
   renderHeatMap() {
     let {
-      map, google, positions, mapCenter, icon, gradient, radius, opacity
+      map, google, positions, mapCenter, icon, gradient, radius, opacity //eslint-disable-line
     } = this.props;
 
     if (!google) {
-        return null;
+      return null;
     }
 
-    positions = positions.map((pos) => {
-        return new google.maps.LatLng(pos.lat, pos.lng);
+    positions = positions.map((pos) => { //eslint-disable-line
+      return new google.maps.LatLng(pos.lat, pos.lng);
     });
 
     const pref = {
-      map: map,
+      map: map, //eslint-disable-line
       data: positions,
     };
 
@@ -66,24 +78,11 @@ export class HeatMap extends React.Component {
 
     this.heatMap.set('opacity', opacity === undefined ? 0.2 : opacity);
 
-    evtNames.forEach(e => {
+    evtNames.forEach((e) => {
       this.heatMap.addListener(e, this.handleEvent(e));
     });
 
-    this.heatMapPromise.resolve(this.heatMap);
-  }
-
-  getHeatMap() {
-    return this.heatMapPromise;
-  }
-
-  handleEvent(evt) {
-    return (e) => {
-      const evtName = `on${camelize(evt)}`
-      if (this.props[evtName]) {
-        this.props[evtName](this.props, this.heatMap, e);
-      }
-    }
+    return this.heatMapPromise.resolve(this.heatMap);
   }
 
   render() {
@@ -94,13 +93,13 @@ export class HeatMap extends React.Component {
 HeatMap.propTypes = {
   position: PropTypes.object,
   map: PropTypes.object,
-  icon: PropTypes.string
-}
+  icon: PropTypes.string,
+};
 
-evtNames.forEach(e => HeatMap.propTypes[e] = PropTypes.func)
+evtNames.forEach(e => HeatMap.propTypes[e] = PropTypes.func) //eslint-disable-line
 
 HeatMap.defaultProps = {
-  name: 'HeatMap'
-}
+  name: 'HeatMap',
+};
 
-export default HeatMap
+export default HeatMap;
