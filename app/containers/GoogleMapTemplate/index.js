@@ -42,7 +42,7 @@ const evtNames = [
   'zoom_changed',
 ];
 
-export { Marker } from '../../components/GoogleMapMarker/Marker';
+
 export { InfoWindow } from '../../components/GoogleMapInfoWindow/InfoWindow';
 export { HeatMap } from '../../components/GoogleMapHeatMap/HeatMap';
 

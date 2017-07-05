@@ -1,6 +1,6 @@
 import React from 'react';
 import Map from '../GoogleMapTemplate/index';
-import Marker from '../../components/GoogleMapMarker/Marker'; //eslint-disable-line
+import Marker from '../../components/GoogleMapMarker/Marker';
 import FlexWrapperDiv from './FlexWrapperDiv';
 import LeftDiv from './LeftDiv';
 import RightDiv from './RightDiv';
@@ -137,6 +137,7 @@ export default class GoogleMapContents extends React.PureComponent {
             center={this.state.position}
             centerAroundCurrentLocation={false}
           >
+            <Marker position={this.state.position} />
           </Map>
         </RightDiv>
       </FlexWrapperDiv>
