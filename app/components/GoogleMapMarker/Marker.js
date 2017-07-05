@@ -75,7 +75,8 @@ export class Marker extends React.Component {
       draggable: draggable, //eslint-disable-line
     };
     this.marker = new google.maps.Marker(pref);
-
+console.log("hi0"); //eslint-disable-line
+console.log(evtNames); //eslint-disable-line
     evtNames.forEach((e) => {
       this.marker.addListener(e, this.handleEvent(e));
     });
@@ -92,6 +93,9 @@ Marker.propTypes = {
   position: PropTypes.object,
   map: PropTypes.object,
 };
+
+console.log("hi1"); //eslint-disable-line
+console.log(evtNames);//eslint-disable-line
 
 evtNames.forEach((e) => Marker.propTypes[e] = PropTypes.func); //eslint-disable-line
 

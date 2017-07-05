@@ -21,7 +21,7 @@ const mapStyles = {
 
 const evtNames = [
   'ready',
-  // 'click',
+  'click',
   'dragend',
   'recenter',
   'bounds_changed',
