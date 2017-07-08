@@ -1,7 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import ReactDOM from 'react-dom'
-import ReactDOMServer from 'react-dom/server'
+import React from 'react';
+import PropTypes from 'prop-types';
+import ReactDOMServer from 'react-dom/server';
 
 export class InfoWindow extends React.Component {
 
@@ -10,7 +9,7 @@ export class InfoWindow extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {google, map} = this.props;
+    const { google, map } = this.props; //eslint-disable-line
 
     if (!google || !map) {
       return;
@@ -26,27 +25,10 @@ export class InfoWindow extends React.Component {
 
     if ((this.props.visible !== prevProps.visible ||
         this.props.marker !== prevProps.marker)) {
-        this.props.visible ?
+        this.props.visible ? //eslint-disable-line
           this.openWindow() :
           this.closeWindow();
     }
-  }
-
-  renderInfoWindow() {
-    let {map, google, mapCenter} = this.props;
-
-    if (!google || !google.maps) {
-      return;
-    }
-
-    const iw = this.infowindow = new google.maps.InfoWindow({
-      content: ''
-    });
-
-    google.maps.event
-      .addListener(iw, 'closeclick', this.onClose.bind(this))
-    google.maps.event
-      .addListener(iw, 'domready', this.onOpen.bind(this));
   }
 
   onOpen() {
@@ -74,8 +56,25 @@ export class InfoWindow extends React.Component {
     this.infowindow.close();
   }
 
+  renderInfoWindow() {
+    let {map, google, mapCenter} = this.props; //eslint-disable-line
+
+    if (!google || !google.maps) {
+      return;
+    }
+
+    const iw = this.infowindow = new google.maps.InfoWindow({
+      content: '',
+    });
+
+    google.maps.event
+      .addListener(iw, 'closeclick', this.onClose.bind(this));
+    google.maps.event
+      .addListener(iw, 'domready', this.onOpen.bind(this));
+  }
+
   renderChildren() {
-    const {children} = this.props;
+    const { children } = this.props;
     return ReactDOMServer.renderToString(children);
   }
 
@@ -92,11 +91,11 @@ InfoWindow.propTypes = {
 
   // callbacks
   onClose: PropTypes.func,
-  onOpen: PropTypes.func
-}
+  onOpen: PropTypes.func,
+};
 
 InfoWindow.defaultProps = {
-  visible: false
-}
+  visible: false,
+};
 
-export default InfoWindow
+export default InfoWindow;

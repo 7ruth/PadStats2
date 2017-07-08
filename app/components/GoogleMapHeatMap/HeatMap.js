@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { camelize } from '../../utils/GoogleMapsUtils/String';
-const evtNames = ['mouseover', 'click', 'recenter'];
+// const evtNames = ['mouseover', 'click', 'recenter'];
 
 const wrappedPromise = () => {
   const wrappedPromise = {}, //eslint-disable-line
@@ -78,9 +78,9 @@ export class HeatMap extends React.Component {
 
     this.heatMap.set('opacity', opacity === undefined ? 0.2 : opacity);
 
-    evtNames.forEach((e) => {
-      this.heatMap.addListener(e, this.handleEvent(e));
-    });
+    // evtNames.forEach((e) => {
+    //   this.heatMap.addListener(e, this.handleEvent(e));
+    // });
 
     return this.heatMapPromise.resolve(this.heatMap);
   }
@@ -96,7 +96,7 @@ HeatMap.propTypes = {
   icon: PropTypes.string,
 };
 
-evtNames.forEach(e => HeatMap.propTypes[e] = PropTypes.func) //eslint-disable-line
+// evtNames.forEach(e => HeatMap.propTypes[e] = PropTypes.func) //eslint-disable-line
 
 HeatMap.defaultProps = {
   name: 'HeatMap',

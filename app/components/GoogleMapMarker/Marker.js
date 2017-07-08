@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { camelize } from '../../utils/GoogleMapsUtils/String';
-const evtNames = ['mouseover', 'click', 'recenter', 'dragend'];
+// const evtNames = ['mouseover', 'click', 'recenter', 'dragend'];
 
 const wrappedPromise = () => {
   const wrappedPromise = {}, //eslint-disable-line
@@ -75,11 +75,10 @@ export class Marker extends React.Component {
       draggable: draggable, //eslint-disable-line
     };
     this.marker = new google.maps.Marker(pref);
-console.log("hi0"); //eslint-disable-line
-console.log(evtNames); //eslint-disable-line
-    evtNames.forEach((e) => {
-      this.marker.addListener(e, this.handleEvent(e));
-    });
+
+    // evtNames.forEach((e) => {
+    //   this.marker.addListener(e, this.handleEvent(e));
+    // });
 
     return this.markerPromise.resolve(this.marker);
   }
@@ -94,10 +93,7 @@ Marker.propTypes = {
   map: PropTypes.object,
 };
 
-console.log("hi1"); //eslint-disable-line
-console.log(evtNames);//eslint-disable-line
-
-evtNames.forEach((e) => Marker.propTypes[e] = PropTypes.func); //eslint-disable-line
+// evtNames.forEach((e) => Marker.propTypes[e] = PropTypes.func); //eslint-disable-line
 
 Marker.defaultProps = {
   name: 'Marker',

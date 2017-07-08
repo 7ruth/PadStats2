@@ -19,28 +19,28 @@ const mapStyles = {
   },
 };
 
-const evtNames = [
-  'ready',
-  'click',
-  'dragend',
-  'recenter',
-  'bounds_changed',
-  'center_changed',
-  'dblclick',
-  'dragstart',
-  'heading_change',
-  'idle',
-  'maptypeid_changed',
-  'mousemove',
-  'mouseout',
-  'mouseover',
-  'projection_changed',
-  'resize',
-  'rightclick',
-  'tilesloaded',
-  'tilt_changed',
-  'zoom_changed',
-];
+// const evtNames = [
+//   'ready',
+//   'click',
+//   'dragend',
+//   'recenter',
+//   'bounds_changed',
+//   'center_changed',
+//   'dblclick',
+//   'dragstart',
+//   'heading_change',
+//   'idle',
+//   'maptypeid_changed',
+//   'mousemove',
+//   'mouseout',
+//   'mouseover',
+//   'projection_changed',
+//   'resize',
+//   'rightclick',
+//   'tilesloaded',
+//   'tilt_changed',
+//   'zoom_changed',
+// ];
 
 export { Marker } from '../../components/GoogleMapMarker/Marker';
 export { InfoWindow } from '../../components/GoogleMapInfoWindow/InfoWindow';
@@ -159,9 +159,9 @@ export class Map extends React.Component {
 
       this.map = new maps.Map(node, mapConfig);
 
-      evtNames.forEach((e) => {
-        this.listeners[e] = this.map.addListener(e, this.handleEvent(e));
-      });
+      // evtNames.forEach((e) => {
+      //   this.listeners[e] = this.map.addListener(e, this.handleEvent(e));
+      // });
       maps.event.trigger(this.map, 'ready');
       this.forceUpdate();
     }
@@ -277,7 +277,7 @@ Map.propTypes = {
   gestureHandling: PropTypes.string,
 };
 
-evtNames.forEach((e) => { Map.propTypes[camelize(e)] = PropTypes.func; });
+// evtNames.forEach((e) => { Map.propTypes[camelize(e)] = PropTypes.func; });
 
 Map.defaultProps = {
   zoom: 14,
