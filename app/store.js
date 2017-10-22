@@ -6,6 +6,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { fromJS } from 'immutable';
 import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
+import { responsiveStoreEnhancer } from 'redux-responsive';
 import createReducer from './reducers';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -35,13 +36,19 @@ export default function configureStore(initialState = {}, history) {
   const store = createStore(
     createReducer(),
     fromJS(initialState),
-    composeEnhancers(...enhancers)
+    compose(
+      responsiveStoreEnhancer,
+      composeEnhancers(...enhancers)
+    )
   );
 
   // Extensions
   store.runSaga = sagaMiddleware.run;
   store.asyncReducers = {}; // Async reducer registry
 
+  store.subscribe(() =>
+    console.log(store.getState()) // eslint-disable-line
+  );
   // Make reducers hot reloadable, see http://mxs.is/googmo
   /* istanbul ignore next */
   if (module.hot) {

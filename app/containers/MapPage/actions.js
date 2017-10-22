@@ -17,6 +17,7 @@
 
 import {
   GOOGLE_API_LOADED,
+  CHANGE_CATEGORIES,
 } from './constants';
 
 /**
@@ -33,5 +34,19 @@ export function setMapPageState(loaded, map, google) {
     loaded,
     map,
     google,
+  };
+}
+
+/**
+ * Changes the selection of point-of-interest categories
+ *
+ * @param  {array} categories an array of selected categories
+ *
+ * @return {object}    An action object with a type of CHANGE_CATEGORIES
+ */
+export function changeCategories(categories) {
+  return {
+    type: CHANGE_CATEGORIES,
+    categories,
   };
 }

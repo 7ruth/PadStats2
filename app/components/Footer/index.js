@@ -1,10 +1,9 @@
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
-import A from 'components/A'
-import LocaleToggle from 'containers/LocaleToggle'
-import Wrapper from './Wrapper'
-import messages from './messages'
+import A from 'components/A';
+import Wrapper from './Wrapper';
+import messages from './messages';
 
 function Footer() {
   return (
@@ -16,12 +15,12 @@ function Footer() {
         <FormattedMessage
           {...messages.authorMessage}
           values={{
-            author: <A href="https://github.com/7ruth">7ruth</A>
+            author: <A href="https://github.com/7ruth">7ruth</A>,
           }}
         />
       </section>
     </Wrapper>
-  )
+  );
 }
 
-export default Footer
+export default Footer;

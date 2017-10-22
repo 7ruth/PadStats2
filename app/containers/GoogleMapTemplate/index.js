@@ -3,21 +3,22 @@ import PropTypes from 'prop-types';
 import invariant from 'invariant';
 import { camelize } from '../../utils/GoogleMapsUtils/String';
 import { makeCancelable } from '../../utils/GoogleMapsUtils/cancelablePromise';
+import mapStyles from './GoogleMapTemplateStyles';
 
-const mapStyles = {
-  container: {
-    position: 'relative',
-    minWidth: '400px',
-    minHeight: '400px',
-  },
-  map: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    top: 0,
-  },
-};
+// const mapStyles = {
+//   container: {
+//     position: 'relative',
+//     minWidth: '400px',
+//     minHeight: '400px',
+//   },
+//   map: {
+//     position: 'absolute',
+//     left: 0,
+//     right: 0,
+//     bottom: 0,
+//     top: 0,
+//   },
+// };
 
 // const evtNames = [
 //   'ready',

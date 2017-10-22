@@ -1,4 +1,12 @@
-import { injectGlobal } from 'styled-components';
+import { injectGlobal, css } from 'styled-components';
+
+export const media = {
+  handheld: (...args) => css`
+    @media (max-width: 420px) {
+      ${css(...args)}
+    }
+  `,
+};
 
 /* eslint no-unused-expressions: 0 */
 injectGlobal`

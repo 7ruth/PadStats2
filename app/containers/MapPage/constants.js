@@ -10,3 +10,4 @@
  */
 
 export const GOOGLE_API_LOADED = 'boilerplate/MapPage/GOOGLE_API_LOADED';
+export const CHANGE_CATEGORIES = 'boilerplate/MapPage/CHANGE_CATEGORIES';
