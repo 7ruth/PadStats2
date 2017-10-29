@@ -18,6 +18,7 @@
 import {
   GOOGLE_API_LOADED,
   CHANGE_CATEGORIES,
+  UPDATE_SEARCH_RESULTS,
 } from './constants';
 
 /**
@@ -48,5 +49,19 @@ export function changeCategories(categories) {
   return {
     type: CHANGE_CATEGORIES,
     categories,
+  };
+}
+
+/**
+ * Update results of the google maps api search
+ *
+ * @param  {array} searchResults object array of google places api search
+ *
+ * @return {object}    An action object with a type of UPDATE_SEARCH_RESULTS
+ */
+export function updateSearchResults(searchResults) {
+  return {
+    type: UPDATE_SEARCH_RESULTS,
+    searchResults,
   };
 }

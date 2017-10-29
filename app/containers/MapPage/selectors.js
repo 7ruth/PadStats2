@@ -26,10 +26,16 @@ const makeSelectCategories = () => createSelector(
   (MapPageState) => MapPageState.get('categories')
 );
 
+const makeSelectSearchResults = () => createSelector(
+  selectMapPage, // eslint-disable-line
+  (MapPageState) => MapPageState.get('searchResults')
+);
+
 export {
   selectMapPage,
   makeSelectLoaded,
   makeSelectMap,
   makeSelectGoogle,
   makeSelectCategories,
+  makeSelectSearchResults,
 };

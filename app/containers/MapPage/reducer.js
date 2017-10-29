@@ -14,6 +14,7 @@ import { fromJS } from 'immutable';
 import {
   GOOGLE_API_LOADED,
   CHANGE_CATEGORIES,
+  UPDATE_SEARCH_RESULTS,
 } from './constants';
 
 // The initial state of the App
@@ -22,6 +23,7 @@ const initialState = fromJS({
   map: null,
   google: null,
   categories: null,
+  searchResults: false,
 });
 
 function MapPageReducer(state = initialState, action) {
@@ -34,6 +36,9 @@ function MapPageReducer(state = initialState, action) {
     case CHANGE_CATEGORIES:
       return state
         .set('categories', action.categories);
+    case UPDATE_SEARCH_RESULTS:
+      return state
+        .set('searchResults', action.searchResults);
     default:
       return state;
   }

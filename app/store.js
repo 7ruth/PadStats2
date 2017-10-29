@@ -46,9 +46,9 @@ export default function configureStore(initialState = {}, history) {
   store.runSaga = sagaMiddleware.run;
   store.asyncReducers = {}; // Async reducer registry
 
-  store.subscribe(() =>
-    console.log(store.getState()) // eslint-disable-line
-  );
+  // store.subscribe(() =>
+  //   console.log(store.getState()) // eslint-disable-line
+  // );
   // Make reducers hot reloadable, see http://mxs.is/googmo
   /* istanbul ignore next */
   if (module.hot) {

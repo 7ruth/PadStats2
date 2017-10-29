@@ -76,15 +76,12 @@ export default function createRoutes(store) {
         const importModules = Promise.all([
           import('containers/MapPage/reducer'),
           import('containers/MapPage'),
-          import('containers/GoogleMapContents/reducer'),
-          import('containers/GoogleMapContents'),
         ]);
 
         const renderRoute = loadModule(cb);
 
         importModules.then(([reducer, component]) => {
           injectReducer('mapPage', reducer.default);
-          injectReducer('googleMapContents', reducer.default);
 
           renderRoute(component);
         });
