@@ -15,41 +15,6 @@ import CategoriesContainer from '../GoogleMapContentsCategoriesContainer';
 import { changeCategories, updateSearchResults } from '../MapPage/actions';
 import { makeSelectCategories, makeSelectSearchResults } from '../MapPage/selectors';
 
-// will separate out Listing into a separate component as this evolves
-// const Listing = ({ places, categories }) => { // eslint-disable-line
-//
-//   if (categories) {
-//     console.log(categories.length - 1);
-//     console.log(categories[categories.length - 1]);
-//     console.log(places);
-//     console.log(places[categories[categories.length - 1]]);
-//   }
-//
-//
-//   return (
-//     <ul>
-//       {places && categories.map((p) => { // eslint-disable-line
-//         if (places[p]) {
-//           return places[p].places.map((i) => { // eslint-disable-line
-//             return (
-//               <li key={i.id}>
-//                 {i.name}
-//               </li>
-//             );
-//           });
-//         }
-//       })}
-//     </ul>
-//   );
-// };
-
-// {places[categories[categories.length - 1]] && places[categories[categories.length - 1]].places.map((p) => { // eslint-disable-line
-//   return (
-//     <li key={p.id}>
-//       {p.name}
-//     </li>
-//   );
-// })}
 function diff(array1, array2) {
   return array1.filter((i) => array2.indexOf(i) < 0);
 }
@@ -66,8 +31,7 @@ export class GoogleMapContents extends React.PureComponent {
   }
 
   componentDidMount() {
-    // later categories will be tak en from users prefences from db and user profile
-    // const userCategories = ['gym', 'convenience_store'];
+    // later categories will be taken from users prefences from db and user profile
     const userCategories = { gym: 0, convenience_store: 0 };
     this.renderAutoComplete();
     this.props.setInitialCategories(userCategories);
@@ -268,7 +232,7 @@ GoogleMapContents.propTypes = {
     React.PropTypes.bool,
     React.PropTypes.func,
   ]),
-  categories: React.PropTypes.array,
+  categories: React.PropTypes.object,
   searchResults: React.PropTypes.oneOfType([
     React.PropTypes.bool,
     React.PropTypes.object,
@@ -284,9 +248,18 @@ export function mapDispatchToProps(dispatch) {
     onMapOptionChange: (categories, evt) => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       // need to diff a new addition
-      const categoryHolder = diff(evt, Object.keys(categories));
-      // add only new category to the state with selection of 0 (this is to pick to display 0th result returned for that category)
-      const newCategories = Object.assign({}, categories, { [categoryHolder]: 0 });
+      let categoryHolder = diff(evt, Object.keys(categories));
+      let newCategories;
+      // make sure we can subtrack categories also
+      if (categoryHolder.length === 0) {
+        categoryHolder = diff(Object.keys(categories), evt);
+        const newCategoryHolder = delete categories[categoryHolder]; // eslint-disable-line
+        newCategories = Object.assign({}, categories, newCategoryHolder);
+      } else {
+        // add only new category to the state with selection of 0 (this is to pick to display 0th result returned for that category)
+        newCategories = Object.assign({}, categories, { [categoryHolder]: 0 });
+      }
+
       dispatch(changeCategories(newCategories));
     },
     setInitialCategories: (initialCategories) => {

@@ -33,10 +33,11 @@ class CategoriesContainer extends React.PureComponent { // eslint-disable-line r
     return (
       <div>
         {searchResults && Object.keys(searchResults).map((category) => { // eslint-disable-line
-          if (searchResults[category]) {
+          if (searchResults[category] && categories[category] !== undefined) {
             return (
               <CategoriesCard
                 key={`${category}Card`}
+                category={category}
                 categoryData={searchResults[category]}
                 categories={categories}
               />
