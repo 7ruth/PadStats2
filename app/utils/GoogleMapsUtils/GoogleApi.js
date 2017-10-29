@@ -1,4 +1,4 @@
-export const GoogleApi = function (opts) {
+export const GoogleApi = function (opts) { // eslint-disable-line
   opts = opts || {}; // eslint-disable-line
 
   const apiKey = opts.apiKey;

@@ -196,7 +196,7 @@ export class GoogleMapContents extends React.PureComponent {
             />
           </CategoriesToggleDiv>
           <SmoothCollapse expanded={categoriesExpanded}>
-            <CheckboxGroup name="mapOptions" value={props.categories ? Object.keys(props.categories) : null} onChange={(e) => props.onMapOptionChange(props.categories, e)}>
+            <CheckboxGroup name="mapOptions" value={props.categories ? Object.keys(props.categories) : null} onChange={(e) => this.props.onMapOptionChange(props.categories, e)}>
               <CheckboxForm >
                 {//  /* eslint says label has to have htmlFor, but that breaks checkbox label clicking, there is no way to make a lint comment out in render portion of JSX */}
                 /* eslint-disable */

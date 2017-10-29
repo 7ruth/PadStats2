@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import PropTypes from 'prop-types';
-import CategoriesCard from '../../components/CategoriesCard'
+import CategoriesCard from '../../components/CategoriesCard';
 import { makeSelectSearchResults, makeSelectCategories } from '../MapPage/selectors';
 
 class CategoriesContainer extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -29,8 +28,8 @@ class CategoriesContainer extends React.PureComponent { // eslint-disable-line r
 
   render() {
     const { searchResults, categories } = this.props;
-console.log("SEARCHRESULTS in PLACES CONTAINER!!!!!!")
-console.log(searchResults)
+// console.log("SEARCHRESULTS in PLACES CONTAINER!!!!!!")
+// console.log(searchResults)
     return (
       <div>
         {searchResults && Object.keys(searchResults).map((category) => { // eslint-disable-line
@@ -60,7 +59,7 @@ CategoriesContainer.propTypes = {
   ]),
 };
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) { // eslint-disable-line
   return {
     // onMapOptionChange: (evt) => {
     //   if (evt !== undefined && evt.preventDefault) evt.preventDefault();
