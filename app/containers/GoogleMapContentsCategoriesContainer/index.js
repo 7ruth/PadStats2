@@ -25,6 +25,11 @@ class CategoriesContainer extends React.PureComponent { // eslint-disable-line r
   //     console.log("COMPONENTS PROPS HAVE CHANGED@@@@@@@@@@@@@@@")
   //   }
   // }
+  leftArrowClick() {
+    // categorySelector += 1;
+    // console.log(categorySelector);
+    console.log('arrow Click');
+  }
 
   render() {
     const { searchResults, categories } = this.props;
@@ -40,6 +45,7 @@ class CategoriesContainer extends React.PureComponent { // eslint-disable-line r
                 category={category}
                 categoryData={searchResults[category]}
                 categories={categories}
+                leftArrowClick={this.leftArrowClick}
               />
             );
           }

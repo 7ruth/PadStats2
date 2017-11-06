@@ -1,26 +1,32 @@
 import React from 'react';
 import Arrow from '../Arrow';
 
-// NEED TO CONVERT TO A STATEFUL COMPONENT SO IT RERENDERS ON CLICKS
 function CategoriesCard(props) {
   let placeName = (<div></div>);
   if (props.categories && props.categoryData) {
-    let categorySelector = props.categories[props.category];
+    const categorySelector = props.categories[props.category];
     placeName = (<div>{props.categoryData.places[categorySelector].name}</div>);
 
     const cardContent = (
       <div>
         <Arrow
           title="Right Arrow"
-          onClick={(e) => rightArrowClick(e)}
+          onClick={props.leftArrowClick}
         />
-        {categorySelector > 0 ?
-          <Arrow
-            title="Right Arrow"
-            onClick={(e) => leftArrowClick(e)}
-          /> : ''
-      }
       </div>
+
+      // <div>
+      //   <Arrow
+      //     title="Right Arrow"
+      //     onClick={(e) => rightArrowClick(e)}
+      //   />
+      //   {categorySelector > 0 ?
+      //     <Arrow
+      //       title="Right Arrow"
+      //       onClick={(e) => leftArrowClick(e)}
+      //     /> : ''
+      // }
+      // </div>
     );
     // if categorySelector = 0 then no left arrow, if it equals to .places length, then no left arrow
     // content = props.categoryData.places.map((value) => (
@@ -28,17 +34,17 @@ function CategoriesCard(props) {
     // ));
 
 
-    const rightArrowClick = () => {
-      categorySelector += 1;
-      console.log(categorySelector);
-      console.log('arrow Click');
-    };
-
-    const leftArrowClick = () => {
-      categorySelector += 1;
-      console.log(categorySelector);
-      console.log('arrow Click');
-    };
+    // const rightArrowClick = () => {
+    //   categorySelector += 1;
+    //   console.log(categorySelector);
+    //   console.log('arrow Click');
+    // };
+    //
+    // const leftArrowClick = () => {
+    //   categorySelector += 1;
+    //   console.log(categorySelector);
+    //   console.log('arrow Click');
+    // };
 // ARRROW  make a stateless component
 // ARROW will be used at least 4 times.
 // can pass different onclick events to the arrow
@@ -78,6 +84,7 @@ CategoriesCard.propTypes = {
     React.PropTypes.bool,
   ]),
   category: React.PropTypes.string,
+  leftArrowClick: React.PropTypes.func,
   // values: React.PropTypes.array,
   // value: React.PropTypes.string,
   // messages: React.PropTypes.object,
