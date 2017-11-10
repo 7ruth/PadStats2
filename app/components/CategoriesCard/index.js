@@ -1,49 +1,39 @@
 import React from 'react';
 import Arrow from '../Arrow';
 
-function CategoriesCard(props) {
-  let placeName = (<div></div>);
-  if (props.categories && props.categoryData) {
-    const categorySelector = props.categories[props.category];
-    placeName = (<div>{props.categoryData.places[categorySelector].name}</div>);
+class CategoriesCard extends React.Component { // eslint-disable-line
 
-    const cardContent = (
-      <div>
-        <Arrow
-          title="Right Arrow"
-          onClick={props.leftArrowClick}
-        />
-      </div>
+// each card should have its own state... that change on arrow clicks..
+  constructor(props) {
+    super(props);
+    this.state = {
+      categoryCounter: 0,
+    };
+  }
 
-      // <div>
-      //   <Arrow
-      //     title="Right Arrow"
-      //     onClick={(e) => rightArrowClick(e)}
-      //   />
-      //   {categorySelector > 0 ?
-      //     <Arrow
-      //       title="Right Arrow"
-      //       onClick={(e) => leftArrowClick(e)}
-      //     /> : ''
-      // }
-      // </div>
-    );
+  plusOneCategoriesCounter = () => {
+    this.state.categoryCounter += 1;
+// console.log('State is about to be updated');
+    this.setState({
+      categoryCounter: this.state.categoryCounter,
+    });
+  }
+
+  minusOneCategoriesCounter = () => {
+    if (this.state.categoryCounter !== 0) {
+      this.state.categoryCounter -= 1;
+    }
+// console.log('State is about to be updated');
+    this.setState({
+      categoryCounter: this.state.categoryCounter,
+    });
+  }
+
+
     // if categorySelector = 0 then no left arrow, if it equals to .places length, then no left arrow
     // content = props.categoryData.places.map((value) => (
     //   <ToggleOption key={value} value={value} message={props.messages[value]} />
-    // ));
-
-
-    // const rightArrowClick = () => {
-    //   categorySelector += 1;
-    //   console.log(categorySelector);
-    //   console.log('arrow Click');
-    // };
-    //
-    // const leftArrowClick = () => {
-    //   categorySelector += 1;
-    //   console.log(categorySelector);
-    //   console.log('arrow Click');
+    // ))
     // };
 // ARRROW  make a stateless component
 // ARROW will be used at least 4 times.
@@ -53,14 +43,50 @@ function CategoriesCard(props) {
 
 // each card needs to be expandable
 // each card will have a way to change to next card
+  render() {
+// console.log('top of the render')
+    const { categories, categoryData } = this.props;
+    let placeName = (<div></div>);
+    let cardContent;
+    let imageSrc;
+
+    if (categories && categoryData) {
+      const categorySelector = this.state.categoryCounter;
+      placeName = (<div>{categoryData.places[categorySelector].name}</div>);
+// console.log(categorySelector)
+// console.log(categoryData.places)
+// console.log(categoryData.places[categorySelector])
+// console.log(categoryData.places[categorySelector].photos['0']);
+      imageSrc = categoryData.places[categorySelector].photos['0'].getUrl({ maxWidth: 800, maxHeight: 800 });
+// console.log(imageSrc);
+      cardContent = (
+        <div>
+          <Arrow
+            title="Left Arrow"
+            onClick={this.plusOneCategoriesCounter}
+          />
+          { this.state.categoryCounter > 0 ?
+            <Arrow
+              title="Right Arrow"
+              onClick={this.minusOneCategoriesCounter}
+            /> : ''
+          }
+        </div>
+      );
+    }
+// console.log('render before return');
     return (
       <div>
         <h1>{placeName}</h1>
+        <img src={imageSrc} alt="" />
+        <h2> {this.state.categoryCounter} </h2>
         <h2>
           {cardContent}
         </h2>
       </div>
     );
+
+
     // If we have items, render them
     // if (props.values) {
     //   content = props.values.map((value) => (
@@ -83,8 +109,7 @@ CategoriesCard.propTypes = {
     React.PropTypes.array,
     React.PropTypes.bool,
   ]),
-  category: React.PropTypes.string,
-  leftArrowClick: React.PropTypes.func,
+  // category: React.PropTypes.string,
   // values: React.PropTypes.array,
   // value: React.PropTypes.string,
   // messages: React.PropTypes.object,

@@ -6,6 +6,7 @@ import { makeSelectSearchResults, makeSelectCategories } from '../MapPage/select
 
 class CategoriesContainer extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 
+
 // here we will have a loop to create all the cards
   // componentDidMount() {
   //   // console.log('placesContainer mounted');
@@ -25,11 +26,6 @@ class CategoriesContainer extends React.PureComponent { // eslint-disable-line r
   //     console.log("COMPONENTS PROPS HAVE CHANGED@@@@@@@@@@@@@@@")
   //   }
   // }
-  leftArrowClick() {
-    // categorySelector += 1;
-    // console.log(categorySelector);
-    console.log('arrow Click');
-  }
 
   render() {
     const { searchResults, categories } = this.props;
@@ -45,7 +41,6 @@ class CategoriesContainer extends React.PureComponent { // eslint-disable-line r
                 category={category}
                 categoryData={searchResults[category]}
                 categories={categories}
-                leftArrowClick={this.leftArrowClick}
               />
             );
           }
