@@ -18,6 +18,7 @@ function Arrow(props) {
       onClick={props.onClick}
       left={props.left}
       right={props.right} 
+      windowWidth={props.windowWidth}
     >
     {props.children ? Children.toArray(props.children) : ''}
     {props.left ? <ChevronLeft /> : <ChevronRight />}
@@ -26,7 +27,7 @@ function Arrow(props) {
 }
 
 Arrow.propTypes = {
-  onClick: PropTypes.func,
+  onClick: PropTypes.string,
   children: PropTypes.node,
   left: PropTypes.string,
   right: PropTypes.string

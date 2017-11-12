@@ -2,6 +2,9 @@ import React from 'react';
 import Arrow from '../Arrow';
 import CategoryDiv from './CategoryDiv'
 import ImagePOI from './ImagePOI'
+import SmoothCollapse from '../../utils/ReactSmoothCollapse';
+import CategoryToggleDiv from './CategoryToggleDiv';
+import CategoryInformation from './CategoryInformation';
 
 class CategoriesCard extends React.Component { // eslint-disable-line
 
@@ -10,6 +13,7 @@ class CategoriesCard extends React.Component { // eslint-disable-line
     super(props);
     this.state = {
       categoryCounter: 0,
+      categoryExpanded: false
     };
   }
 
@@ -25,10 +29,14 @@ class CategoriesCard extends React.Component { // eslint-disable-line
     if (this.state.categoryCounter !== 0) {
       this.state.categoryCounter -= 1;
     }
-// console.log('State is about to be updated');
+
     this.setState({
       categoryCounter: this.state.categoryCounter,
     });
+  }
+
+  toggleCategory() {
+    this.setState({ categoryExpanded: !this.state.categoryExpanded });
   }
 
 
@@ -49,6 +57,8 @@ class CategoriesCard extends React.Component { // eslint-disable-line
 // console.log('top of the render')
     const { category, categories, categoryData } = this.props;
     let placeName;
+    let placeRating;
+    let placeAddress;
     let cardContent;
     let imageSrc;
     let imageDimensions;
@@ -56,44 +66,72 @@ class CategoriesCard extends React.Component { // eslint-disable-line
     if (categories && categoryData) {
       const categorySelector = this.state.categoryCounter;
       placeName = categoryData.places[categorySelector].name;
-// console.log(categorySelector)
-// console.log(categoryData.places)
-console.log(categoryData.places[categorySelector])
-console.log(categoryData.places[categorySelector].name)
-// console.log(categoryData.places[categorySelector].photos['0'])
-console.log('window.innerWidth');
-console.log(window.innerWidth);
+      placeRating = categoryData.places[categorySelector].rating;
+      placeAddress = categoryData.places[categorySelector].vicinity;
       imageDimensions = window.innerWidth > 1024 ? Math.floor(window.innerWidth * (0.3)) : Math.floor(window.innerWidth  * (0.4));
-console.log(imageDimensions)
       imageSrc = categoryData.places[categorySelector].photos['0'].getUrl({ maxWidth: imageDimensions, maxHeight: imageDimensions });
-// console.log(imageSrc);
+console.log(categoryData.places[categorySelector])
+console.log(window.innerWidth > 1024)
     }
-// console.log('render before return');
+
     return (
       <CategoryDiv id={category + 'Category'}>
-          <h1>{placeName}</h1>
           <div 
-            id={category + 'Category' + 'Image'}
+            id={category + 'Category' + 'Content'}
             style={{
-              width: '100%'
+              width: window.innerWidth > 1024 ? '70%' : '100%',
+              margin: '0 auto'
             }}
           >
             <ImagePOI 
               src={imageSrc} 
               alt=''
-              height={imageDimensions}
+              windowWidth={window.innerWidth}
             />
-           
+            <CategoryInformation >
+              <span
+                style={{
+                  fontSize: '2em',
+                  fontWeight: '900',
+                  lineHeight: 1,
+                  marginBottom: '10px'
+                }}
+              >
+              {placeName}</span>
+              <span>Rating: {placeRating}</span>
+              <span>Address: {placeAddress}</span>
+              <div
+                style={{
+                  // position: 'absolute',
+                  // bottom: '0px',
+                  fontSize: '1.5em'
+                }}
+              >
+                Travel Time from Real Estate: XX.XX margin
+              </div>
+              {/* <CategoryToggleDiv>
+                <input
+                  type="button"
+                  value={this.state.categoryExpanded ? 'Less' : 'More'}
+                  onClick={() => this.toggleCategory()}
+                />
+              </CategoryToggleDiv> */}
+            </CategoryInformation >
           </div>
+          {/* <SmoothCollapse expanded={this.state.categoryExpanded}>
+                <div> Bro do you even expand </div>
+          </SmoothCollapse > */}
           <Arrow
               title='Left Arrow'
               onClick={this.state.categoryCounter > 0 ? this.minusOneCategoriesCounter : ""}
               left='0px'
+              windowWidth={window.innerWidth}
             /> 
           <Arrow
               title='Right Arrow'
               onClick={this.plusOneCategoriesCounter}
               right='0px'
+              windowWidth={window.innerWidth}
           />
       </CategoryDiv>
     );

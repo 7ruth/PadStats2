@@ -9,7 +9,7 @@ const buttonStyles = css`
   right: ${props => props.right ? props.right : 'auto'};
   vertical-align: middle;
   box-sizing: border-box;
-  padding: 0.25em 2em;
+  // padding: 0.25em 2em;
   text-decoration: none;
   -webkit-font-smoothing: antialiased;
   -webkit-touch-callout: none;
@@ -18,12 +18,14 @@ const buttonStyles = css`
   outline: 0;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: bold;
-  font-size: 3em;
+  font-size: ${props => props.windowWidth < 1024 ? '2em' : '3em'};
   color: #41addd;
+  margin-left: ${props => props.left && props.windowWidth < 1024 ? '-0.5em' : 'auto'};
+  margin-right: ${props => props.right && props.windowWidth < 1024 ? '-0.5em' : 'auto'};
 
   &:active {
-    background: #41addd;
-    color: #fff;
+    // background: #41addd;
+    color: green;
   }
 `;
 

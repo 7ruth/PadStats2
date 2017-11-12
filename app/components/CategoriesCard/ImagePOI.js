@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 
 const ImagePOI = styled.img`
-  // display: block;
-  // text-align: center;
-  // vertical-align: middle;
-  // width: auto;
-  order: 1;
-  //height: ${props => props.height ? props.height+'px' : 'auto'};
+  float: ${props => props.windowWidth > 1024 ? 'left' : 'none'};
+  height: ${props => props.windowWidth > 1024 ? '300px' : '180px'};
+  padding-left: ${props => props.windowWidth > 1024 ? 'none' : '20px'};
+  max-width: 90%;
+  
 `;
 
 export default ImagePOI;
