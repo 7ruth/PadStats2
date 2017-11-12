@@ -7,29 +7,29 @@
  */
 
 import React, { PropTypes, Children } from 'react';
+import ChevronRight from 'react-icons/lib/fa/chevron-right';
+import ChevronLeft from 'react-icons/lib/fa/chevron-left';
 
-
-// import A from './A';
 import StyledButton from './StyledButton';
-import Wrapper from './Wrapper';
 
 function Arrow(props) {
-  const button = (
-    <StyledButton onClick={props.onClick}>
-      {props.children ? Children.toArray(props.children) : ''}
-    </StyledButton>
-  );
-
   return (
-    <Wrapper>
-      {button}
-    </Wrapper>
-  );
+    <StyledButton 
+      onClick={props.onClick}
+      left={props.left}
+      right={props.right} 
+    >
+    {props.children ? Children.toArray(props.children) : ''}
+    {props.left ? <ChevronLeft /> : <ChevronRight />}
+  </StyledButton>
+  );  
 }
 
 Arrow.propTypes = {
   onClick: PropTypes.func,
   children: PropTypes.node,
+  left: PropTypes.string,
+  right: PropTypes.string
 };
 
 export default Arrow;

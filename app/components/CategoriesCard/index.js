@@ -1,5 +1,7 @@
 import React from 'react';
 import Arrow from '../Arrow';
+import CategoryDiv from './CategoryDiv'
+import ImagePOI from './ImagePOI'
 
 class CategoriesCard extends React.Component { // eslint-disable-line
 
@@ -45,45 +47,55 @@ class CategoriesCard extends React.Component { // eslint-disable-line
 // each card will have a way to change to next card
   render() {
 // console.log('top of the render')
-    const { categories, categoryData } = this.props;
-    let placeName = (<div></div>);
+    const { category, categories, categoryData } = this.props;
+    let placeName;
     let cardContent;
     let imageSrc;
+    let imageDimensions;
 
     if (categories && categoryData) {
       const categorySelector = this.state.categoryCounter;
-      placeName = (<div>{categoryData.places[categorySelector].name}</div>);
+      placeName = categoryData.places[categorySelector].name;
 // console.log(categorySelector)
 // console.log(categoryData.places)
-// console.log(categoryData.places[categorySelector])
-// console.log(categoryData.places[categorySelector].photos['0']);
-      imageSrc = categoryData.places[categorySelector].photos['0'].getUrl({ maxWidth: 800, maxHeight: 800 });
+console.log(categoryData.places[categorySelector])
+console.log(categoryData.places[categorySelector].name)
+// console.log(categoryData.places[categorySelector].photos['0'])
+console.log('window.innerWidth');
+console.log(window.innerWidth);
+      imageDimensions = window.innerWidth > 1024 ? Math.floor(window.innerWidth * (0.3)) : Math.floor(window.innerWidth  * (0.4));
+console.log(imageDimensions)
+      imageSrc = categoryData.places[categorySelector].photos['0'].getUrl({ maxWidth: imageDimensions, maxHeight: imageDimensions });
 // console.log(imageSrc);
-      cardContent = (
-        <div>
-          <Arrow
-            title="Left Arrow"
-            onClick={this.plusOneCategoriesCounter}
-          />
-          { this.state.categoryCounter > 0 ?
-            <Arrow
-              title="Right Arrow"
-              onClick={this.minusOneCategoriesCounter}
-            /> : ''
-          }
-        </div>
-      );
     }
 // console.log('render before return');
     return (
-      <div>
-        <h1>{placeName}</h1>
-        <img src={imageSrc} alt="" />
-        <h2> {this.state.categoryCounter} </h2>
-        <h2>
-          {cardContent}
-        </h2>
-      </div>
+      <CategoryDiv id={category + 'Category'}>
+          <h1>{placeName}</h1>
+          <div 
+            id={category + 'Category' + 'Image'}
+            style={{
+              width: '100%'
+            }}
+          >
+            <ImagePOI 
+              src={imageSrc} 
+              alt=''
+              height={imageDimensions}
+            />
+           
+          </div>
+          <Arrow
+              title='Left Arrow'
+              onClick={this.state.categoryCounter > 0 ? this.minusOneCategoriesCounter : ""}
+              left='0px'
+            /> 
+          <Arrow
+              title='Right Arrow'
+              onClick={this.plusOneCategoriesCounter}
+              right='0px'
+          />
+      </CategoryDiv>
     );
 
 
