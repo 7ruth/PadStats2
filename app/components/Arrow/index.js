@@ -27,7 +27,7 @@ function Arrow(props) {
 }
 
 Arrow.propTypes = {
-  onClick: PropTypes.string,
+  onClick: PropTypes.function,
   children: PropTypes.node,
   left: PropTypes.string,
   right: PropTypes.string

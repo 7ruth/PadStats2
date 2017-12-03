@@ -60,8 +60,37 @@ export function changeCategories(categories) {
  * @return {object}    An action object with a type of UPDATE_SEARCH_RESULTS
  */
 export function updateSearchResults(searchResults) {
+  console.log('updateSearchResults() > Actions > MapPage')
+  console.log(searchResults)
   return {
     type: UPDATE_SEARCH_RESULTS,
     searchResults,
   };
 }
+
+// Step 1, get directions to work on initial load...
+// for that I need a list of all the addresses returned to the G Maps Template
+// Where do I receive the addresses?
+// How did I look up adresses in the past? (and build out direction)
+
+// YOU found that function, directionsMap, now make sure it works piece by piece
+
+// CREATE AN ACTION TO:
+// what about initial load... addresses from that?
+// Sense of change of arrows to update search of the gmaps web
+// 
+
+// /**
+//  * Update results of the google maps api search
+//  *
+//  * @param  {array} searchResults object array of google places api search
+//  *
+//  * @return {object}    An action object with a type of UPDATE_SEARCH_RESULTS
+//  */
+// export function updateSearchResults(searchResults) {
+//   return {
+//     type: UPDATE_SEARCH_RESULTS,
+//     searchResults,
+//   };
+// }
+

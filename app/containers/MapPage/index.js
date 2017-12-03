@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import H2 from 'components/H2';
 
-import { makeSelectLoaded, makeSelectMap, makeSelectGoogle } from './selectors';
+import { makeSelectLoaded, makeSelectMap, makeSelectGoogle, makeSelectSearchResults } from './selectors';
 import CenteredSection from './CenteredSection';
 import messages from './messages';
 import { setMapPageState } from './actions';
@@ -120,6 +120,7 @@ const mapStateToProps = createStructuredSelector({
   loaded: makeSelectLoaded(),
   map: makeSelectMap(),
   google: makeSelectGoogle(),
+  searchResults: makeSelectSearchResults()
 });
 
 // Wrap the component to inject dispatch and state into it
