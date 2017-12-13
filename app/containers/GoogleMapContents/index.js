@@ -12,7 +12,7 @@ import CheckboxForm from './CheckboxForm';
 import SmoothCollapse from '../../utils/ReactSmoothCollapse';
 import CategoriesToggleDiv from './CategoriesToggleDiv';
 import CategoriesContainer from '../GoogleMapContentsCategoriesContainer';
-import { changeCategories, updateSearchResults } from '../MapPage/actions';
+import { changeCategories, updateSearchResults, updateDirectionResults } from '../MapPage/actions';
 import { makeSelectCategories, makeSelectSearchResults } from '../MapPage/selectors';
 
 function diff(array1, array2) {
@@ -79,7 +79,19 @@ export class GoogleMapContents extends React.PureComponent {
             hasNextPage: pagination.hasNextPage },
           });
 
-          this.props.updateSearchResults(searchResults);
+          // WHEN SEARCH RESULTS UPDATE, THIS SHOULD TRIGGER LOOK UP NEW DIRECTIONS, SAME AS WHEN ARROWS ARE CLICKED 
+          this.props.updateSearchResults(searchResults)
+          this.props.updateDirectionResults();
+          // .then(
+          //   function() {
+          //     console.log('????????????/')
+          //     this.props.updateDirectionResults();
+          //   }, 
+          //   function(reason) {
+          //     console.log('Direction look up was unsuccessful');
+          //     console.log(reason);
+          // });
+          
         }
       });
     });
@@ -267,6 +279,11 @@ export function mapDispatchToProps(dispatch) {
     },
     updateSearchResults: (searchResults) => {
       dispatch(updateSearchResults(searchResults));
+    },
+    // this is a trigger for starting a loop to update directions (since big-G limits how you can look up directions)
+    // since its a trigger, no need to pass in anything
+    updateDirectionResults: () => {
+      dispatch(updateDirectionResults());
     },
   };
 }

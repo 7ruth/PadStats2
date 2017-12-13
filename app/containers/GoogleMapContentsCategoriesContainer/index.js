@@ -61,6 +61,8 @@ CategoriesContainer.propTypes = {
   ]),
 };
 
+
+/// WILL HAVE UPDATE_DIRECTIONS_RESULTS HERE...
 export function mapDispatchToProps(dispatch) { // eslint-disable-line
   return {
     // onMapOptionChange: (evt) => {

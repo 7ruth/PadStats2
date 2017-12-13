@@ -19,6 +19,7 @@ import {
   GOOGLE_API_LOADED,
   CHANGE_CATEGORIES,
   UPDATE_SEARCH_RESULTS,
+  UPDATE_DIRECTION_RESULTS
 } from './constants';
 
 /**
@@ -65,6 +66,20 @@ export function updateSearchResults(searchResults) {
   return {
     type: UPDATE_SEARCH_RESULTS,
     searchResults,
+  };
+}
+
+/**
+ * Triggers the saga to get directions data
+ *
+ * @param  {array} directionResults object array of google places api search
+ *
+ * @return {object}    An action object with a type of UPDATE_SEARCH_RESULTS
+ */
+export function updateDirectionResults() {
+  console.log('updateDirectionResults() > Actions > MapPage')
+  return {
+    type: UPDATE_DIRECTION_RESULTS
   };
 }
 

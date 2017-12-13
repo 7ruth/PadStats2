@@ -15,6 +15,7 @@ import {
   GOOGLE_API_LOADED,
   CHANGE_CATEGORIES,
   UPDATE_SEARCH_RESULTS,
+  UPDATE_DIRECTION_RESULTS,
 } from './constants';
 
 // The initial state of the App
@@ -24,6 +25,9 @@ const initialState = fromJS({
   google: null,
   categories: null,
   searchResults: false,
+  directionResults: false,
+  loading: false,
+  error: false,
 });
 
 function MapPageReducer(state = initialState, action) {
@@ -39,6 +43,11 @@ function MapPageReducer(state = initialState, action) {
     case UPDATE_SEARCH_RESULTS:
       return state
         .set('searchResults', action.searchResults);
+    case UPDATE_DIRECTION_RESULTS:
+    console.log("reduced UPDATE DIRECTION RESULTS ((((((((((")
+        return state
+        .set('loading', true)
+        .set('error', false)
     default:
       return state;
   }

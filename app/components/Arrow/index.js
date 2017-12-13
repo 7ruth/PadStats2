@@ -27,10 +27,13 @@ function Arrow(props) {
 }
 
 Arrow.propTypes = {
-  onClick: PropTypes.function,
   children: PropTypes.node,
   left: PropTypes.string,
-  right: PropTypes.string
+  right: PropTypes.string,
+  onClick: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func
+  ]),
 };
 
 export default Arrow;

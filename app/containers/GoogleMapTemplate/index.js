@@ -195,6 +195,24 @@ export class Map extends React.Component {
     });
   }
 
+  // export function* getRepos() {
+  //   // Select username from store
+  //   const username = yield select(makeSelectUsername());
+  //   const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
+  
+  //   try {
+  //     // Call our request helper (see 'utils/request')
+  //     const repos = yield call(request, requestURL);
+  //     yield put(reposLoaded(repos, username));
+  //   } catch (err) {
+  //     yield put(repoLoadingError(err));
+  //   }
+  // }
+
+  //! Transplant directionsMap into MapPage ... create sagas.js file
+  //! create a saga there with all directionsMap functionality, that in the end
+  //! updates mapPage store which communicates that to the map and all other pieces
+
   directionsMap(userSelection) {
     const map = this.map;
     const {google} = this.props;
@@ -224,7 +242,9 @@ export class Map extends React.Component {
     
 
     // can this be converted to a generator????!! try!
-
+    
+    
+    
 
     this.lookupDirections(google, map, request)
       .then((results, pagination) => {

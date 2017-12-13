@@ -12,3 +12,4 @@
 export const GOOGLE_API_LOADED = 'boilerplate/MapPage/GOOGLE_API_LOADED';
 export const CHANGE_CATEGORIES = 'boilerplate/MapPage/CHANGE_CATEGORIES';
 export const UPDATE_SEARCH_RESULTS = 'boilerplate/MapPage/UPDATE_SEARCH_RESULTS';
+export const UPDATE_DIRECTION_RESULTS = 'boilerplate/MapPage/UPDATE_DIRECTION_RESULTS';

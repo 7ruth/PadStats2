@@ -69,6 +69,8 @@ export class MapPage extends React.PureComponent { // eslint-disable-line react/
       this.map = new maps.Map(node, mapConfig);
       this.props.onGoogleLoad(true, this.map, window.google);
     }
+    console.log("!!!!!!!!!!!!")
+    console.log(this.props.searchResults)
   }
 
   render() {
