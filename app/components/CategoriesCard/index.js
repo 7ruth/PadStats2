@@ -1,14 +1,15 @@
 import React from 'react';
 import Arrow from '../Arrow';
+import A from './A';
+import HeadingDiv from './HeadingDiv'
 import CategoryDiv from './CategoryDiv'
 import ImagePOI from './ImagePOI'
 import SmoothCollapse from '../../utils/ReactSmoothCollapse';
 import CategoryToggleDiv from './CategoryToggleDiv';
 import CategoryInformation from './CategoryInformation';
-
+import { defaultCategories } from "../../containers/GoogleMapTemplate/index";
 class CategoriesCard extends React.Component { // eslint-disable-line
 
-// each card should have its own state... that change on arrow clicks..
   constructor(props) {
     super(props);
     this.state = {
@@ -17,98 +18,99 @@ class CategoriesCard extends React.Component { // eslint-disable-line
     };
   }
 
-  plusOneCategoriesCounter = () => {
-    this.state.categoryCounter += 1;
-// console.log('State is about to be updated');
-    this.setState({
-      categoryCounter: this.state.categoryCounter,
-    });
-  }
-
-  minusOneCategoriesCounter = () => {
-    if (this.state.categoryCounter !== 0) {
-      this.state.categoryCounter -= 1;
-    }
-
-    this.setState({
-      categoryCounter: this.state.categoryCounter,
-    });
-  }
-
   toggleCategory() {
     this.setState({ categoryExpanded: !this.state.categoryExpanded });
   }
 
-
-    // if categorySelector = 0 then no left arrow, if it equals to .places length, then no left arrow
-    // content = props.categoryData.places.map((value) => (
-    //   <ToggleOption key={value} value={value} message={props.messages[value]} />
-    // ))
-    // };
-// ARRROW  make a stateless component
-// ARROW will be used at least 4 times.
-// can pass different onclick events to the arrow
-// each of those onClick events will communicate with w/e it needs to talk to
-
-
-// each card needs to be expandable
-// each card will have a way to change to next card
   render() {
-// console.log('top of the render')
-    const { category, categories, categoryData } = this.props;
+    const { category, 
+            categoryData, 
+            changeCounter, 
+            distanceData, 
+            id, 
+            pushCategoryToTheTop
+          } = this.props;
+
     let placeName;
     let placeRating;
     let placeAddress;
+    let placeTravelTime;
     let cardContent;
     let imageSrc;
     let imageDimensions;
+    let commuteCost;
 
-    if (categories && categoryData) {
+    if (categoryData) {
+      console.log('categoryData')
+      console.log(categoryData)
       const categorySelector = this.state.categoryCounter;
-      placeName = categoryData.places[categorySelector].name;
-      placeRating = categoryData.places[categorySelector].rating;
-      placeAddress = categoryData.places[categorySelector].vicinity;
+      commuteCost = categoryData.distanceData && categoryData.distanceData.commuteCost || "";
+      placeName = categoryData.name;
+      placeRating = categoryData.rating;
+      placeAddress = categoryData.vicinity;
+      placeTravelTime = (categoryData.distanceData && categoryData.distanceData.travelTime) ? categoryData.distanceData.travelTime : "";
       imageDimensions = window.innerWidth > 1024 ? Math.floor(window.innerWidth * (0.3)) : Math.floor(window.innerWidth  * (0.4));
-      imageSrc = categoryData.places[categorySelector].photos['0'].getUrl({ maxWidth: imageDimensions, maxHeight: imageDimensions });
-console.log(categoryData.places[categorySelector])
-console.log(window.innerWidth > 1024)
+      imageSrc = categoryData.photos && categoryData.photos['0'].getUrl({ maxWidth: imageDimensions, maxHeight: imageDimensions });
     }
+              
+    // set up to create a google search
+    const placeNameSearchTerm = placeName.split(' ').join('+');
+    const placeAddressSearchTerm = placeAddress.split(' ').join('+');
+    const searchPlaceUrl = 'https://www.google.com/search?q=' + placeNameSearchTerm + '+' + placeAddressSearchTerm
 
     return (
       <CategoryDiv id={category + 'Category'}>
           <div 
-            id={category + 'Category' + 'Content'}
+            id={category + '_Category' + '_Content'}
             style={{
-              width: window.innerWidth > 1024 ? '70%' : '100%',
+              width: window.innerWidth > 1024 ? '80%' : '100%',
               margin: '0 auto'
             }}
           >
-            <ImagePOI 
-              src={imageSrc} 
-              alt=''
-              windowWidth={window.innerWidth}
-            />
+            <a 
+              href={searchPlaceUrl}
+              target="_blank"
+            > 
+              {imageSrc && 
+                <ImagePOI 
+                  src={imageSrc} 
+                  alt=''
+                  windowWidth={window.innerWidth}
+                />
+              }
+            </a>
             <CategoryInformation >
-              <span
-                style={{
-                  fontSize: '2em',
-                  fontWeight: '900',
-                  lineHeight: 1,
-                  marginBottom: '10px'
-                }}
+              <HeadingDiv
+                color={defaultCategories[category][1]}
               >
-              {placeName}</span>
-              <span>Rating: {placeRating}</span>
-              <span>Address: {placeAddress}</span>
-              <div
-                style={{
-                  // position: 'absolute',
-                  // bottom: '0px',
-                  fontSize: '1.5em'
-                }}
-              >
-                Travel Time from Real Estate: XX.XX margin
-              </div>
+                <A 
+                  href={searchPlaceUrl}
+                  target="_blank"
+                  style={{
+                    textDecoration: 'none',
+                    color: defaultCategories[category][1],
+                    paddingLeft: '1px'
+                  }}
+                >
+                  {placeName}
+                </A>
+              </HeadingDiv>
+              {placeTravelTime &&
+                <div
+                  style={{
+                    marginTop: '-5px',
+                    fontSize: '1.5em',
+                    color: defaultCategories[category][1],
+                  }}
+                >
+                  {/* <span>Distance: {placeTravelTime}</span><br /> */}  
+                  <span>Distance [{placeTravelTime}] - Rating: {placeRating} </span><br />
+                  <br/>
+                  <span>You go to {(this.props.categories && defaultCategories[this.props.category][0])} {(this.props.categories && this.props.categories[category][1])} {(this.props.categories && (this.props.categories[category][1] > 1 ? 'times' : 'time'))} a week</span><br />
+                  <span>Weekly Commute Cost: <b>[ <span style={{color: 'OrangeRed'}}>{commuteCost}</span> ]</b></span>
+                  
+                </div>
+              }
               {/* <CategoryToggleDiv>
                 <input
                   type="button"
@@ -121,34 +123,34 @@ console.log(window.innerWidth > 1024)
           {/* <SmoothCollapse expanded={this.state.categoryExpanded}>
                 <div> Bro do you even expand </div>
           </SmoothCollapse > */}
+          {/* only show pushToTheTop button on rows other than the first */}
+          {(id !== 0) && 
+            <Arrow
+              icon='topArrow'
+              title='PushToTop Arrow'
+              onClick={()=> pushCategoryToTheTop(this.props.category)}
+              left='55px'
+              windowWidth={window.innerWidth}
+              style={{
+                height: '40%'
+              }}
+            /> }
           <Arrow
+              icon='leftArrow'
               title='Left Arrow'
-              onClick={this.state.categoryCounter > 0 ? this.minusOneCategoriesCounter : ""}
+              onClick={evt => changeCounter(this.props.category, "minus")}
               left='0px'
               windowWidth={window.innerWidth}
             /> 
           <Arrow
+              icon='rightArrow'
               title='Right Arrow'
-              onClick={this.plusOneCategoriesCounter}
+              onClick={evt => changeCounter(this.props.category, "plus")}
               right='0px'
               windowWidth={window.innerWidth}
           />
       </CategoryDiv>
     );
-
-
-    // If we have items, render them
-    // if (props.values) {
-    //   content = props.values.map((value) => (
-    //     <ToggleOption key={value} value={value} message={props.messages[value]} />
-    //   ));
-    // }
-    //
-    // return (
-    //   <Select value={props.value} onChange={props.onToggle}>
-    //     {content}
-    //   </Select>
-    // );
   }
 }
 
@@ -159,10 +161,7 @@ CategoriesCard.propTypes = {
     React.PropTypes.array,
     React.PropTypes.bool,
   ]),
-  // category: React.PropTypes.string,
-  // values: React.PropTypes.array,
-  // value: React.PropTypes.string,
-  // messages: React.PropTypes.object,
+  pushCategoryToTheTop: React.PropTypes.func
 };
 
 export default CategoriesCard;

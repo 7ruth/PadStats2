@@ -4,6 +4,25 @@ import invariant from 'invariant';
 import { camelize } from '../../utils/GoogleMapsUtils/String';
 import { makeCancelable } from '../../utils/GoogleMapsUtils/cancelablePromise';
 import mapStyles from './GoogleMapTemplateStyles';
+import rainbow from "./utils";
+
+function diff(array1, array2) {
+  return array1.filter((i) => array2.indexOf(i) < 0);
+}
+
+export const defaultCategories = {
+  convenience_store: ["Convenience Store", "#cc0099"],
+  gym: ["Gym", "#d29fdb"],
+  grocery_or_supermarket: ["Grocery", "#2095f2"],
+  subway_station: ["Metro", "#00bbd3"],
+  school: ["School", "#009587"],
+  meal_takeaway: ["Takeout", "#4bae4f"],
+  restaurant: ["Restaurant", "#fec006"],
+  library: ["Library", "#785447"],
+  museum: ["Museum", "#c1c1c1"],
+  store: ["Store", "rgb(0, 0, 0)"],
+  transit_station: ["Transit Station", "#6639b6"]
+}
 
 // const mapStyles = {
 //   container: {
@@ -47,7 +66,10 @@ export { Marker } from '../../components/GoogleMapMarker/Marker';
 export { InfoWindow } from '../../components/GoogleMapInfoWindow/InfoWindow';
 export { HeatMap } from '../../components/GoogleMapHeatMap/HeatMap';
 
-let directionsRendererArray = [];
+let directionsRendererObj = {};
+let markerObject={};
+let infowindow;
+let infoWindowObject={};
 
 export class Map extends React.Component {
   constructor(props) {
@@ -103,20 +125,18 @@ export class Map extends React.Component {
     }
     if (this.props.center !== prevProps.center) {
       // new address will trigger initial look up of all the routes
-      // to early to trigger on initial load...
-      console.log('GoogleMapTemplate center was updated')
-      console.log('searchResults')
-      console.log(this.props.searchResults)
       this.setState({ //eslint-disable-line
         currentLocation: this.props.center,
       });
     }
-    if (prevProps.searchResults !== this.props.searchResults) {
-      console.log('!!!!!!!!!!!!')
-      console.log("NEED to think how to later hook in arrow actions... to pass counters")
-      console.log('GoogleMapTemplate ComponentDidUpdate searchResults')
-      console.log(this.props.searchResults)
-      this.directionsMap()
+    if (this.props.directionResults !== prevProps.directionResults) {
+console.log("DIRECTIONS PROPS HAVE CHANGED")
+      // if directions changed, calculate distance and time
+      this.setDirections(this.props.directionResults);
+    }
+    if (this.props.categories !== prevProps.categories) {
+console.log("CATEGORIES PROPS HAVE CHANGED")
+      this.setDirections();
     }
   }
 
@@ -167,7 +187,7 @@ export class Map extends React.Component {
 
       Object.keys(mapConfig).forEach((key) => {
         // Allow to configure mapConfig with 'false'
-        if (mapConfig[key] === null) {
+        if (mapConfig[key] === null || mapConfig[key] === undefined) {
           delete mapConfig[key];
         }
       });
@@ -183,6 +203,7 @@ export class Map extends React.Component {
   }
 
   lookupDirections(google, map, request) {
+  const directionsService1 = new google.maps.DirectionsService(map);
     return new Promise((resolve, reject) => {
       const directionsService = new google.maps.DirectionsService(map);
       directionsService.route(request, (results, status, pagination) => {
@@ -195,160 +216,97 @@ export class Map extends React.Component {
     });
   }
 
-  // export function* getRepos() {
-  //   // Select username from store
-  //   const username = yield select(makeSelectUsername());
-  //   const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
-  
-  //   try {
-  //     // Call our request helper (see 'utils/request')
-  //     const repos = yield call(request, requestURL);
-  //     yield put(reposLoaded(repos, username));
-  //   } catch (err) {
-  //     yield put(repoLoadingError(err));
-  //   }
-  // }
+  setDirections(directionResults) {  
 
-  //! Transplant directionsMap into MapPage ... create sagas.js file
-  //! create a saga there with all directionsMap functionality, that in the end
-  //! updates mapPage store which communicates that to the map and all other pieces
+    
+      const map = this.map;
+      const searchResults = this.props.searchResults;
+      const categories = this.props.categories;
 
-  directionsMap(userSelection) {
+      // if no directionResults are passed in, then do a check to remove categories
+      if (!directionResults) {
+        const removedCategory = diff(Object.keys(directionsRendererObj), Object.keys(categories));
+        console.log('RAWR')
+        console.log(removedCategory);
+        if (removedCategory.length > 0) {
+          directionsRendererObj[removedCategory].setMap(null);
+          delete directionsRendererObj[removedCategory];
+
+          markerObject[removedCategory].setMap(null);
+          delete markerObject[removedCategory]
+          console.log("33333333333333");
+          console.log(directionsRendererObj);
+          console.log(markerObject)
+        }
+        console.log(directionsRendererObj)
+        return;
+      }
+
+      const category = directionResults.category;
+console.log("HIIIIII")
+console.log(defaultCategories[category][1]);
+      let directionRenderer = new google.maps.DirectionsRenderer({
+        suppressMarkers: true,
+        draggable: false,
+        scrollwheel: false,
+        map: map,
+        preserveViewport: true,
+        // polylineOptions: new google.maps.Polyline({strokeColor: rainbow(Math.round(Math.random() * 100),Math.round(Math.random() * 9)),})
+        polylineOptions: new google.maps.Polyline({strokeColor: defaultCategories[category][1]})
+      });
+
+console.log('directionsRendererObj');
+console.log(directionsRendererObj);
+
+      // Clean up any routes if they exist
+      directionsRendererObj[category] && directionsRendererObj[category].setMap(null);
+      // Set new directionRenderer obj
+      directionsRendererObj[category]=directionRenderer;
+      // Set marker on the map
+      directionsRendererObj[category].setMap(map);
+      // Set directions on the map
+      directionsRendererObj[category].setDirections(directionResults.directionResults);
+      // Select the poi we are rendering directions for to make a more specific marker
+      let routedPoi = searchResults[category].places[categories[category][0]];
+      // create a marker for current POI, need to provide category for look
+      this.createMarker(routedPoi, category);
+  }
+
+  createMarker(place, category) {
     const map = this.map;
     const {google} = this.props;
     const maps = google.maps;
-
-    console.log('directionsMap Activated')
-    console.log(this.props.searchResults)
-    // if (!this.state.currentCategory && counter<=this.state.initialCategories.length) {
-    //   // if this is an initial load on a new address (due to counter being 0) (but not an initial load of the site (directionsRendererArray is filled)), clean routes
-    //   if (counter === 0) {
-    //     for (let value of Object.keys(directionsRendererArray)) {
-    //       directionsRendererArray[value].setMap(null);
-    //     }
-    //   }
-
-    console.log(Object.keys(this.props.searchResults).pop())
-    const targetCategory = Object.keys(this.props.searchResults).pop();
-    // get the first category POI result to look up directions to
-    const targetPOIaddress = this.props.searchResults[targetCategory].places[0].geometry.location
-    // TODO, get a way to change travel mode in the look up below
-    const request = {
-      origin: this.props.center,
-      destination: targetPOIaddress,
-      travelMode: google.maps.DirectionsTravelMode.DRIVING
-    }
     
-    
-
-    // can this be converted to a generator????!! try!
-    
-    
-    
-
-    this.lookupDirections(google, map, request)
-      .then((results, pagination) => {
-        console.log("~~~")
-        console.log("lookupDirections!!!!!")
-        console.log(results)
-        // this.setState({
-        //   directions: results
-        // })
+    if (place === "undefined" || place === undefined){
+      return;
+    } else {
+      // Marker settings
+      let marker = new google.maps.Marker({
+        map: map,
+        position: place.geometry.location,
+        visible: false
       });
-
-
-    // let directionsRenderer = new google.maps.DirectionsRenderer({
-    //   suppressMarkers: true,
-    //   draggable: false,
-    //   map: map,
-    //   polylineOptions: new google.maps.Polyline({strokeColor: rainbow(Math.round(Math.random() * 100),Math.round(Math.random() * 9)),
-    //   })});
-
-      
-    
-    // directionsRendererArray[targetCategory]=directionsRenderer;
-    // directionsRendererArray[targetCategory].setMap(map);
-
-    // // pass this.state.currentDirections to setDirection... looked up direction between center of the map and the POI in question...
-
-
-    // directionsRendererArray[targetCategory].setDirections(this.state.currentDirections);
-
-
-
-    //   //use counter and Counters to select the poi object thats being routed
-    //   let routedPoi = this.state.currentPoiObject[this.props.userSelection[counter]][this.state.currentCounters[this.props.userSelection[counter]]]
-    //   // create a marker for current POI and category
-    //   this.createMarker(routedPoi, this.props.userSelection[counter]);
-    //   //calc distance and time to the POI from the center address
-    //   let origin_lat = this.state.currentLocation.lat();
-    //   let origin_lng = this.state.currentLocation.lng();
-    //   let latitude = routedPoi.geometry.location.lat();
-    //   let longitude = routedPoi.geometry.location.lng();
-    //   //clean up distances object if user selection has changed
-    //   if (Object.keys(distances).length/2> this.props.userSelection.length) {
-    //     for (let i=0; i<Object.keys(distances).length; i+=2) {
-    //       if (this.props.userSelection.indexOf(Object.keys(distances)[i])==-1) {
-    //         delete distances[Object.keys(distances)[i]]
-    //         delete distances[Object.keys(distances)[i+1]]
-    //       }
-    //     }
-    //   }
-    //   console.log(distances);
-    //   distances[this.props.userSelection[counter]] = this.calcDistance(origin_lat,origin_lng,latitude,longitude);
-    //   //calc travel time to the POI
-    //   distances[this.props.userSelection[counter]+'TravelTime']= this.computetime(directionsRendererArray[this.props.userSelection[counter]].directions)
-    //   //export distances object to MainMap component for rendering on the SidePanel component
-    //   this.props.exportObject(distances)
-    //   /////////////////////////////////////////////////////////////////
-    //   counter += 1
-    //   if (counter === this.props.userSelection.length) {
-    //     counter = 0
-    //   }
-    //   //if +/- arrows are activated
-    // } else {
-    //   //clear previous renderer
-    //   directionsRendererArray[this.state.currentCategory].setMap(null);
-    //   //pass renderer to map
-    //   directionsRendererArray[this.state.currentCategory].setMap(map);
-    //   //pass options with results, start and end to the renderer on the map
-    //   directionsRendererArray[this.state.currentCategory].setDirections(this.state.currentDirections);
-    //   //set marker and info window
-    //   routedPoi = this.state.currentPoiObject[this.state.currentCategory][this.state.currentCounters[this.state.currentCategory]]
-    //   this.createMarker(routedPoi, this.state.currentCategory);
-    //   //calc distance and time to the POI from the center address
-    //   let origin_lat = this.state.currentLocation.lat();
-    //   let origin_lng = this.state.currentLocation.lng();
-    //   let latitude = routedPoi.geometry.location.lat();
-    //   let longitude = routedPoi.geometry.location.lng();
-    //   distances[this.state.currentCategory] = this.calcDistance(origin_lat,origin_lng,latitude,longitude);
-    //   //calc travel time to the POI
-    //   distances[this.state.currentCategory+"TravelTime"]= this.computetime(directionsRendererArray[this.state.currentCategory].directions)
-    //   //export distances object to MainMap component for rendering on the SidePanel component
-    //   this.props.exportObject(distances)
-    // }
-    //Coloring function for routes
-    function rainbow(numOfSteps, step) {
-    // This function generates vibrant, "evenly spaced" colours (i.e. no clustering). This is ideal for creating easily distinguishable vibrant markers in Google Maps and other apps.
-    // Adam Cole, 2011-Sept-14
-    // HSV to RBG adapted from: http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
-      var r, g, b;
-      var h = step / numOfSteps;
-      var i = ~~(h * 10);
-      var f = h * 10 - i;
-      var q = 1 - f;
-      switch(i % 10){
-          case 0: r = 1, g = f, b = 0; break;
-          case 1: r = q, g = 1, b = 0; break;
-          case 2: r = 0, g = 1, b = f; break;
-          case 3: r = 0, g = q, b = 1; break;
-          case 4: r = f, g = 0, b = 1; break;
-          case 5: r = 1, g = 0, b = q; break;
+      //Overwrite previous marker for this category
+      if(markerObject[category]){
+        markerObject[category].setMap(null);
       }
-      var c = "#" + ("00" + (~ ~(r * 255)).toString(16)).slice(-2) + ("00" + (~ ~(g * 255)).toString(16)).slice(-2) + ("00" + (~ ~(b * 255)).toString(16)).slice(-2);
-      return (c);
+      //delete any extra markers (if user unchecked a category)
+      if (Object.keys(markerObject).length>Object.keys(this.props.categories).length){
+        for (var i=0; i<Object.keys(markerObject).length; i++){
+          if (Object.keys(this.props.categories).indexOf(Object.keys(markerObject)[i])==-1){
+            markerObject[Object.keys(markerObject)[i]].setMap(null);
+            delete markerObject[Object.keys(markerObject)[i]]
+          }
+        }
       }
-    // pastCounters = this.state.currentCounters
+      // Set new marker after cleanup
+      markerObject[category]=marker;
+      // Info Window Settings
+      infowindow = new google.maps.InfoWindow();
+      infoWindowObject[category]=infowindow;
+      infoWindowObject[category].setContent(place.name);
+      infoWindowObject[category].open(map, markerObject[category]);
+    }
   }
 
   handleEvent(evtName) {
@@ -474,6 +432,7 @@ Map.defaultProps = {
   style: {},
   containerStyle: {},
   visible: true,
+  scrollwheel: false,
 };
 
 export default Map;

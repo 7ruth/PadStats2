@@ -19,13 +19,13 @@ const buttonStyles = css`
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: bold;
   font-size: ${props => props.windowWidth < 1024 ? '2em' : '3em'};
-  color: #41addd;
   margin-left: ${props => props.left && props.windowWidth < 1024 ? '-0.5em' : 'auto'};
   margin-right: ${props => props.right && props.windowWidth < 1024 ? '-0.5em' : 'auto'};
+  color: MidnightBlue;
+  text-shadow: 1px 1px 1px CornflowerBlue;
 
-  &:active {
-    // background: #41addd;
-    color: green;
+  &:hover {
+    color: OrangeRed;
   }
 `;
 

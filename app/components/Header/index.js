@@ -11,9 +11,13 @@ import messages from './messages';
 class Header extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <div>
+      <div style={{
+        height: "65px"
+        }}
+      >
         <A href="http://padstats.co/">
-          <Img src={Logo} alt="PadStats - Logo" />
+          {/* <Img src={Logo} alt="PadStats - Logo" /> */}
+          PadStats
         </A>
         <NavBar>
           <HeaderLink to="/">
@@ -25,7 +29,12 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
           <HeaderLink to="/landingPage">
             <FormattedMessage {...messages.landingPage} />
           </HeaderLink>
-          <HeaderLink to="/mapPage">
+          <HeaderLink 
+            to="/mapPage"
+            style={{
+              marginRight: 0
+            }}
+          >
             <FormattedMessage {...messages.mapPage} />
           </HeaderLink>
         </NavBar>

@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import { media } from '../../global-styles';
 
 const CheckboxForm = styled.form`
+    display:inline;
     margin: 10px auto;
-    display: inline-block;
-    position: relative;
-    font-size: 25px;
+    font-size: 30px;
     width: 100%;
+    color: MidnightBlue;
 
     input[type="checkbox"] {
       height: 17px;
@@ -16,8 +16,9 @@ const CheckboxForm = styled.form`
     }
 
     label {
-      float: left;
-      width: auto;
+      // float: left;
+      // width: ${props => props.alignment ? "100%" : "auto"};
+      // display: ${props => props.alignment ? "inline-block" : "inherit"};
     }
 
     ${media.handheld`

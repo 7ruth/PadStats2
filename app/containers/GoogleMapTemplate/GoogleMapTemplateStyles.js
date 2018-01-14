@@ -12,7 +12,7 @@ const mapStyles = {
     right: 0,
     bottom: 0,
     top: 0,
-    maxHeight: '400px',
+    maxHeight: '250px',
   },
 };
 

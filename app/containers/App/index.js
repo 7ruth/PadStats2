@@ -30,7 +30,7 @@ export function App(props) {
         titleTemplate="%s - PadStats"
         defaultTitle="We help you find a home thats ideal for you"
         meta={[
-          { name: 'description', content: 'PadStats will help you identify the most ideal home for your lifestyle' },
+          { name: 'description', content: 'Better PadStats help you make the right home buying decision' },
         ]}
       />
       <Header />

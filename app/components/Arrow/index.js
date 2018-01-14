@@ -9,19 +9,27 @@
 import React, { PropTypes, Children } from 'react';
 import ChevronRight from 'react-icons/lib/fa/chevron-right';
 import ChevronLeft from 'react-icons/lib/fa/chevron-left';
+import ChevronUp from 'react-icons/lib/fa/chevron-up';
 
 import StyledButton from './StyledButton';
 
 function Arrow(props) {
+  const icons = {
+    leftArrow: <ChevronLeft />,
+    rightArrow: <ChevronRight />,
+    topArrow: <ChevronUp />
+  };
+  
   return (
     <StyledButton 
       onClick={props.onClick}
       left={props.left}
       right={props.right} 
       windowWidth={props.windowWidth}
+      style={props.style}
     >
     {props.children ? Children.toArray(props.children) : ''}
-    {props.left ? <ChevronLeft /> : <ChevronRight />}
+    {props.icon ? icons[props.icon] : ''}
   </StyledButton>
   );  
 }

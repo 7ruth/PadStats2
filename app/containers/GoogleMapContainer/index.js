@@ -12,6 +12,7 @@ export class GoogleMapContainer extends React.PureComponent { // eslint-disable-
     return (
       <div>
         <GoogleMapTemplate
+          scrollwheel={false}
           google={google}
           className={'map'}
           visible={false}

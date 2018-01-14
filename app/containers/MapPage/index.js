@@ -69,8 +69,6 @@ export class MapPage extends React.PureComponent { // eslint-disable-line react/
       this.map = new maps.Map(node, mapConfig);
       this.props.onGoogleLoad(true, this.map, window.google);
     }
-    console.log("!!!!!!!!!!!!")
-    console.log(this.props.searchResults)
   }
 
   render() {
@@ -89,7 +87,7 @@ export class MapPage extends React.PureComponent { // eslint-disable-line react/
         <div>
           <CenteredSection>
             <H2>
-              <FormattedMessage {...messages.trymeMessage} />
+              {/* <FormattedMessage {...messages.trymeMessage} /> */}
             </H2>
           </CenteredSection>
         </div>
@@ -122,7 +120,7 @@ const mapStateToProps = createStructuredSelector({
   loaded: makeSelectLoaded(),
   map: makeSelectMap(),
   google: makeSelectGoogle(),
-  searchResults: makeSelectSearchResults()
+  searchResults: makeSelectSearchResults() 
 });
 
 // Wrap the component to inject dispatch and state into it
