@@ -412,9 +412,7 @@ console.log("SEARCH NEARby FROM AUTOCOMPLETE")
           </Map>
         </MapDiv>
         <SecondaryMenuDiv>
-          <CommuteCostDiv>
-              {props.searchResults.totalTravelTime ? "Time Burden: " + props.searchResults.totalTravelTime : ""}
-          </CommuteCostDiv>
+          {props.searchResults.totalTravelTime ? <CommuteCostDiv>Commute Cost [ {<div style={{color:'orangered', display:'inline'}}>{props.searchResults.totalTravelTime}</div>} ]</CommuteCostDiv> : ""}
         </SecondaryMenuDiv>
         <ResultDiv>
           <div>
